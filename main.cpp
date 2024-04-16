@@ -1,13 +1,14 @@
-#include "src/usuario.cpp"
-#include "src/livros.cpp"
-#include "src/aluguel.cpp"
-#include "src/historias.cpp"
-#include "src/emprestados.cpp"
-#include "src/pesquisa.cpp"
+#include "usuario.hpp"
+#include "livros.hpp"
+#include "aluguel.hpp"
+#include "historias.hpp"
+#include "emprestados.hpp"
+#include "pesquisa.hpp"
 
 #include <iostream>
 
 using namespace std;
+
 int main()
 {
     bool escolhaHistoria = true;
@@ -19,7 +20,7 @@ int main()
         cout << "2 - Alugar um livro " << endl;
         cout << "3 - Ver história de livros" << endl;
         cout << "4 - Renovação da reserva" << endl;
-        cout << "5 Cadastrar um novo livro" << endl;
+        cout << "5 - Cadastrar um novo livro" << endl;
         cout << "6 - Pesquisar livros disponíveis" << endl;
 
         int escolha;
@@ -29,7 +30,6 @@ int main()
         {
         case 1:
         {
-
             criarUsuario();
             break;
         }
@@ -51,6 +51,7 @@ int main()
         case 5:
         {
             criarLivro();
+            break; // Adicionei esse break para sair do switch após a função
         }
         case 6:
         {

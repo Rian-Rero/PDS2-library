@@ -1,4 +1,4 @@
-#include "pesquisa.hpp"
+#include "../include/pesquisa.hpp"
 #include <string>
 #include <iostream>
 
