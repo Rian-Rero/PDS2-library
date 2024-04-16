@@ -51,7 +51,7 @@ int main()
         case 5:
         {
             criarLivro();
-            break; // Adicionei esse break para sair do switch após a função
+            break;
         }
         case 6:
         {
