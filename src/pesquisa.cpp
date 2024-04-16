@@ -1,5 +1,6 @@
 #include "pesquisa.hpp"
 #include <string>
+#include <iostream>
 
 string termo;
 void pesquisa()

@@ -1,4 +1,5 @@
 #include "usuario.hpp"
+#include <iostream>
 
 void alugarLivro()
 {
