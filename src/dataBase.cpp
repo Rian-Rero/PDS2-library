@@ -1,4 +1,4 @@
-#include "database.h"
+#include "dataBase.hpp"
 #include <iostream>
 
 using namespace std;
@@ -11,6 +11,21 @@ Database::Database(const string &filename)
         cerr << "Erro ao abrir o banco de dados: " << sqlite3_errmsg(db) << endl;
         throw runtime_error("Erro ao abrir o banco de dados");
     }
+    const char *sql_create_table =
+        "CREATE TABLE IF NOT EXISTS Livros ("
+        "ID INTEGER PRIMARY KEY AUTOINCREMENT,"
+        "Titulo TEXT NOT NULL,"
+        "Autor TEXT NOT NULL,"
+        "Emprestado INTEGER NOT NULL,"
+        "DataCadastro TEXT NOT NULL"
+        ");";
+
+    rc = sqlite3_exec(db, sql_create_table, nullptr, nullptr, nullptr);
+    if (rc != SQLITE_OK)
+    {
+        cerr << "Erro ao criar a tabela Livros: " << sqlite3_errmsg(db) << endl;
+        throw runtime_error("Erro ao criar a tabela Livros");
+    }
 }
 
 Database::~Database()
@@ -18,14 +33,13 @@ Database::~Database()
     sqlite3_close(db);
 }
 
-void Database::insertBook(const string &title, const string &author, bool borrowed, const string &date)
+void Database::createBook(const string &title, const string &author, bool borrowed, const string &date)
 {
     const char *sql_insert =
         "INSERT INTO Livros (Titulo, Autor, Emprestado, DataCadastro) VALUES (?, ?, ?, ?);";
 
     sqlite3_stmt *stmt;
     int rc = sqlite3_prepare_v2(db, sql_insert, -1, &stmt, nullptr);
-
     if (rc != SQLITE_OK)
     {
         cerr << "Erro ao preparar a consulta: " << sqlite3_errmsg(db) << endl;
