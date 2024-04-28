@@ -1,7 +1,7 @@
 CXX = g++
 CXXFLAGS = -std=c++11 -Wall
 BUILD_DIR = build
-INCLUDE_DIR = include
+INCLUDE_DIR = includes
 SRC_DIR = src
 
 TARGET = $(BUILD_DIR)/LibrarySoftware
