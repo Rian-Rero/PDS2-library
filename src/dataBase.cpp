@@ -1,7 +1,14 @@
 #include "dataBase.hpp"
 #include <iostream>
+#include <cryptopp/cryptlib.h>
+#include <cryptopp/sha.h>     // Para SHA-256
+#include <cryptopp/hex.h>     // Para codificação hexadecimal
+#include <cryptopp/filters.h> // Para Crypto++ filters
+#include <sstream>            // Adicionando inclusão para stringstream
 
 using namespace std;
+using namespace CryptoPP;
+SHA256 sha256;
 
 // Constructor
 
@@ -13,7 +20,9 @@ Database::Database(const string &filename)
         cerr << "Erro ao abrir o banco de dados: " << sqlite3_errmsg(db) << endl;
         throw runtime_error("Erro ao abrir o banco de dados");
     }
-    const char *sql_create_table =
+
+    // Criação da tabela Livros
+    const char *sql_create_table_livros =
         "CREATE TABLE IF NOT EXISTS Livros ("
         "ID INTEGER PRIMARY KEY AUTOINCREMENT,"
         "Titulo TEXT NOT NULL,"
@@ -22,11 +31,27 @@ Database::Database(const string &filename)
         "DataCadastro TEXT NOT NULL"
         ");";
 
-    rc = sqlite3_exec(db, sql_create_table, nullptr, nullptr, nullptr);
+    rc = sqlite3_exec(db, sql_create_table_livros, nullptr, nullptr, nullptr);
     if (rc != SQLITE_OK)
     {
         cerr << "Erro ao criar a tabela Livros: " << sqlite3_errmsg(db) << endl;
         throw runtime_error("Erro ao criar a tabela Livros");
+    }
+
+    // Criação da tabela Usuarios
+    const char *sql_create_table_usuarios =
+        "CREATE TABLE IF NOT EXISTS Usuarios ("
+        "ID INTEGER PRIMARY KEY AUTOINCREMENT,"
+        "Nome TEXT NOT NULL,"
+        "Email TEXT NOT NULL,"
+        "Senha TEXT NOT NULL"
+        ");";
+
+    rc = sqlite3_exec(db, sql_create_table_usuarios, nullptr, nullptr, nullptr);
+    if (rc != SQLITE_OK)
+    {
+        cerr << "Erro ao criar a tabela Usuarios: " << sqlite3_errmsg(db) << endl;
+        throw runtime_error("Erro ao criar a tabela Usuarios");
     }
 }
 
@@ -224,4 +249,66 @@ void Database::getAvailableBooks(bool borrowed)
     {
         cout << "Nenhum livro encontrado com o status de  " << (borrowed ? "Disponível" : "Emprestado") << "'." << endl;
     }
+}
+
+// Users
+
+void Database::createUser(const string &nome, const string &email, const string &senha)
+{
+    // Verificar se o email já está em uso
+    const char *sql_check_email =
+        "SELECT COUNT(*) FROM Usuarios WHERE Email = ?;";
+
+    sqlite3_stmt *stmt_check_email;
+    int rc = sqlite3_prepare_v2(db, sql_check_email, -1, &stmt_check_email, nullptr);
+    if (rc != SQLITE_OK)
+    {
+        cerr << "Erro ao preparar a consulta: " << sqlite3_errmsg(db) << endl;
+        return;
+    }
+
+    sqlite3_bind_text(stmt_check_email, 1, email.c_str(), -1, SQLITE_STATIC);
+
+    rc = sqlite3_step(stmt_check_email);
+    if (rc == SQLITE_ROW && sqlite3_column_int(stmt_check_email, 0) > 0)
+    {
+        cerr << "E-mail já em uso." << endl;
+        sqlite3_finalize(stmt_check_email);
+        return;
+    }
+
+    sqlite3_finalize(stmt_check_email);
+
+    // Gerar hash da senha
+    SHA256 sha256;
+    string senha_hash;
+    StringSource(senha, true, new HashFilter(sha256, new HexEncoder(new StringSink(senha_hash))));
+
+    // Inserir usuário no banco de dados
+    const char *sql_insert =
+        "INSERT INTO Usuarios (Nome, Email, Senha) VALUES (?, ?, ?);";
+
+    sqlite3_stmt *stmt;
+    rc = sqlite3_prepare_v2(db, sql_insert, -1, &stmt, nullptr);
+    if (rc != SQLITE_OK)
+    {
+        cerr << "Erro ao preparar a consulta: " << sqlite3_errmsg(db) << endl;
+        return;
+    }
+
+    sqlite3_bind_text(stmt, 1, nome.c_str(), -1, SQLITE_STATIC);
+    sqlite3_bind_text(stmt, 2, email.c_str(), -1, SQLITE_STATIC);
+    sqlite3_bind_text(stmt, 3, senha_hash.c_str(), -1, SQLITE_STATIC);
+
+    rc = sqlite3_step(stmt);
+    if (rc != SQLITE_DONE)
+    {
+        cerr << "Erro ao inserir o usuário: " << sqlite3_errmsg(db) << endl;
+    }
+    else
+    {
+        cout << "Usuário criado com sucesso!" << endl;
+    }
+
+    sqlite3_finalize(stmt);
 }

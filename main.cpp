@@ -3,6 +3,7 @@
 #include <limits>
 #include "menu.hpp"
 #include "books.hpp"
+#include "users.hpp"
 
 using namespace std;
 
@@ -12,6 +13,7 @@ int main()
 
     Menu *menu = new Menu();
     Books *books = new Books();
+    Users *users = new Users();
     int choice;
 
     // Main Menu
@@ -94,6 +96,7 @@ int main()
             break;
         case 2:
             menu->registerUser_();
+            users->createUser_();
             break;
         case 3:
             menu->closeSoftware_();
@@ -106,5 +109,6 @@ int main()
 
     delete menu;  // Desalocando a memória do Menu
     delete books; // Desalocando a memória dos livros
+    delete users; // Desalocando a memória dos usuários
     return 0;
 }

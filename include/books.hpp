@@ -3,7 +3,6 @@
 
 #include <string>
 #include <iostream>
-#include <vector>
 
 using namespace std;
 
@@ -26,14 +25,14 @@ public:
     void getBook_();
     void getBookByAuthor_();
     void getAvailableBooks_(bool borrowed);
-    void getTitle_();
-    void getAuthor_();
-    void isBorrowed_();
-    void getDate_();
 
     // Setters
 
     void createBook_();
+
+    // Destructor
+
+    ~Books();
 };
 
 #endif // BOOKS_H
