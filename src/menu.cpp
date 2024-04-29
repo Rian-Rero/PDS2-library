@@ -12,7 +12,7 @@ void Menu::displayMainMenu_()
 }
 void Menu::displayLoggedInMenu_()
 {
-    cout << "Usuário Logado" << endl;
+    cout << "Olá Usuário" << endl;
     cout << "1. Cadastrar Livro" << endl;
     cout << "2. Logout" << endl;
     cout << "Escolha uma opção: ";

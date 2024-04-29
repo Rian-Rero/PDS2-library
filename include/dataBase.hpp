@@ -11,7 +11,7 @@ public:
     Database(const string &filename);
     ~Database();
 
-    void createBook(const string &title, const string &author, bool borrowed, const std::string &date);
+    void createBook(const string &title, const string &author, bool borrowed, const string &date);
 
 private:
     sqlite3 *db;

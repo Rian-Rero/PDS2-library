@@ -1,7 +1,7 @@
 
 #include <iostream>
 #include "menu.hpp"
-#include "dataBase.hpp"
+#include "books.hpp"
 
 using namespace std;
 
@@ -12,7 +12,7 @@ int main()
     // Variables
 
     Menu *menu = new Menu();
-    Database *dataBase = new Database("./database/LibraryDevelopmentDB.db");
+    Books *books = new Books();
     int choice;
 
     // Main Menu
@@ -34,8 +34,7 @@ int main()
                 {
                 case 1:
                     menu->createBooks_();
-                    dataBase->createBook("Dom Quixote", "Miguel de Cervantes", false, "2021-09-01");
-
+                    books->createBook_();
                     break;
                 case 2:
                     cout << "Deslogando..." << endl;
@@ -58,7 +57,7 @@ int main()
         }
     } while (choice != 3);
 
-    delete menu;     // Desalocando a memória do Menu
-    delete dataBase; // Desalocando a memória do Database
+    delete menu;  // Desalocando a memória do Menu
+    delete books; // Desalocando a memória dos livros
     return 0;
 }

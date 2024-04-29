@@ -3,6 +3,8 @@
 
 using namespace std;
 
+// Constructor
+
 Database::Database(const string &filename)
 {
     int rc = sqlite3_open(filename.c_str(), &db);
@@ -28,10 +30,14 @@ Database::Database(const string &filename)
     }
 }
 
+// Destructor
+
 Database::~Database()
 {
     sqlite3_close(db);
 }
+
+// Books
 
 void Database::createBook(const string &title, const string &author, bool borrowed, const string &date)
 {
