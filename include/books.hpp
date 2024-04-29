@@ -22,10 +22,14 @@ public:
 
     // Getters
 
-    string getTitle() const;
-    string getAuthor() const;
-    bool isBorrowed() const;
-    string getDate() const;
+    void getAllBooks_();
+    void getBook_();
+    void getBookByAuthor_();
+    void getAvailableBooks_(bool borrowed);
+    void getTitle_();
+    void getAuthor_();
+    void isBorrowed_();
+    void getDate_();
 
     // Setters
 

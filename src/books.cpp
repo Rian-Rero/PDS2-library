@@ -72,3 +72,69 @@ void Books::createBook_()
 
     delete dataBase;
 }
+void Books::getAllBooks_()
+{
+    Database *dataBase = new Database("./database/LibraryDevelopmentDB.db");
+
+    try
+    {
+        dataBase->getAllBooks();
+    }
+    catch (const exception &e)
+    {
+        cerr << "Erro ao buscar os livros: " << e.what() << endl;
+    }
+    delete dataBase;
+}
+
+void Books::getBook_()
+{
+    Database *dataBase = new Database("./database/LibraryDevelopmentDB.db");
+    string name;
+    cin.ignore();
+    cout << "Digite o nome do livro: ";
+    getline(cin, name);
+
+    try
+    {
+        dataBase->getBook(name);
+    }
+    catch (const exception &e)
+    {
+        cerr << "Erro ao buscar o livro: " << e.what() << endl;
+    }
+}
+
+void Books::getBookByAuthor_()
+{
+    Database *dataBase = new Database("./database/LibraryDevelopmentDB.db");
+    string author;
+    cin.ignore();
+    cout << "Digite o nome do autor: ";
+    getline(cin, author);
+
+    try
+    {
+        dataBase->getBookByAuthor(author);
+    }
+    catch (const exception &e)
+    {
+        cerr << "Erro ao buscar o livro: " << e.what() << endl;
+    }
+    delete dataBase;
+}
+
+void Books::getAvailableBooks_(bool borrowed)
+{
+    Database *dataBase = new Database("./database/LibraryDevelopmentDB.db");
+
+    try
+    {
+        dataBase->getAvailableBooks(borrowed);
+    }
+    catch (const exception &e)
+    {
+        cerr << "Erro ao buscar os livros disponíveis: " << e.what() << endl;
+    }
+    delete dataBase;
+}

@@ -68,4 +68,160 @@ void Database::createBook(const string &title, const string &author, bool borrow
     }
 
     sqlite3_finalize(stmt);
+};
+
+void Database::getAllBooks()
+{
+    const char *sql_select_all = "SELECT * FROM Livros;";
+
+    sqlite3_stmt *stmt;
+    int rc = sqlite3_prepare_v2(db, sql_select_all, -1, &stmt, nullptr);
+    if (rc != SQLITE_OK)
+    {
+        cerr << "Erro ao preparar a consulta: " << sqlite3_errmsg(db) << endl;
+        return;
+    }
+
+    cout << "Todos os livros:\n";
+
+    while ((rc = sqlite3_step(stmt)) == SQLITE_ROW)
+    {
+        int id = sqlite3_column_int(stmt, 0);
+        const unsigned char *title = sqlite3_column_text(stmt, 1);
+        const unsigned char *author = sqlite3_column_text(stmt, 2);
+        int borrowed = sqlite3_column_int(stmt, 3);
+        const unsigned char *date = sqlite3_column_text(stmt, 4);
+
+        cout << "ID: " << id << ", Título: " << title << ", Autor: " << author
+             << ", Emprestado: " << (borrowed ? "Sim" : "Não") << ", Data de Cadastro: " << date << endl;
+    }
+
+    sqlite3_finalize(stmt);
+};
+
+void Database::getBook(const string &name)
+{
+    if (name.empty())
+    {
+        cerr << "Erro: Nome do livro vazio." << endl;
+        return;
+    }
+
+    const char *sql_select_book = "SELECT * FROM Livros WHERE Titulo LIKE ?;";
+
+    sqlite3_stmt *stmt;
+    int rc = sqlite3_prepare_v2(db, sql_select_book, -1, &stmt, nullptr);
+    if (rc != SQLITE_OK)
+    {
+        cerr << "Erro ao preparar a consulta: " << sqlite3_errmsg(db) << endl;
+        return;
+    }
+
+    // String de busca com curingas para filtrar parte do título
+    string searchName = "%" + name + "%";
+    sqlite3_bind_text(stmt, 1, searchName.c_str(), -1, SQLITE_STATIC);
+
+    bool found = false;
+
+    while ((rc = sqlite3_step(stmt)) == SQLITE_ROW)
+    {
+        found = true;
+        int id = sqlite3_column_int(stmt, 0);
+        const unsigned char *title = sqlite3_column_text(stmt, 1);
+        const unsigned char *author = sqlite3_column_text(stmt, 2);
+        int borrowed = sqlite3_column_int(stmt, 3);
+        const unsigned char *date = sqlite3_column_text(stmt, 4);
+
+        cout << "ID: " << id << ", Título: " << title << ", Autor: " << author
+             << ", Emprestado: " << (borrowed ? "Sim" : "Não") << ", Data de Cadastro: " << date << endl;
+    }
+
+    sqlite3_finalize(stmt);
+
+    if (!found)
+    {
+        cout << "Nenhum livro encontrado com o título contendo '" << name << "'." << endl;
+    }
+}
+
+void Database::getBookByAuthor(const string &author)
+{
+    if (author.empty())
+    {
+        cerr << "Erro: Nome do autor vazio." << endl;
+        return;
+    }
+
+    const char *sql_select_book = "SELECT * FROM Livros WHERE Autor LIKE ?;";
+
+    sqlite3_stmt *stmt;
+    int rc = sqlite3_prepare_v2(db, sql_select_book, -1, &stmt, nullptr);
+    if (rc != SQLITE_OK)
+    {
+        cerr << "Erro ao preparar a consulta: " << sqlite3_errmsg(db) << endl;
+        return;
+    }
+
+    // String de busca com curingas para filtrar parte do autor
+    string searchAuthor = "%" + author + "%";
+    sqlite3_bind_text(stmt, 1, searchAuthor.c_str(), -1, SQLITE_STATIC);
+
+    bool found = false;
+
+    while ((rc = sqlite3_step(stmt)) == SQLITE_ROW)
+    {
+        found = true;
+        int id = sqlite3_column_int(stmt, 0);
+        const unsigned char *title = sqlite3_column_text(stmt, 1);
+        const unsigned char *author = sqlite3_column_text(stmt, 2);
+        int borrowed = sqlite3_column_int(stmt, 3);
+        const unsigned char *date = sqlite3_column_text(stmt, 4);
+
+        cout << "ID: " << id << ", Título: " << title << ", Autor: " << author
+             << ", Emprestado: " << (borrowed ? "Sim" : "Não") << ", Data de Cadastro: " << date << endl;
+    }
+
+    sqlite3_finalize(stmt);
+
+    if (!found)
+    {
+        cout << "Nenhum livro encontrado com o autor contendo '" << author << "'." << endl;
+    }
+}
+
+void Database::getAvailableBooks(bool borrowed)
+{
+    const char *sql_select_book = "SELECT * FROM Livros WHERE Emprestado = ?;";
+
+    sqlite3_stmt *stmt;
+    int rc = sqlite3_prepare_v2(db, sql_select_book, -1, &stmt, nullptr);
+    if (rc != SQLITE_OK)
+    {
+        cerr << "Erro ao preparar a consulta: " << sqlite3_errmsg(db) << endl;
+        return;
+    }
+
+    sqlite3_bind_int(stmt, 1, borrowed ? 1 : 0);
+
+    bool found = false;
+
+    while ((rc = sqlite3_step(stmt)) == SQLITE_ROW)
+    {
+        found = true;
+        int id = sqlite3_column_int(stmt, 0);
+        const unsigned char *title = sqlite3_column_text(stmt, 1);
+        const unsigned char *author = sqlite3_column_text(stmt, 2);
+        int borrowed = sqlite3_column_int(stmt, 3);
+        const unsigned char *date = sqlite3_column_text(stmt, 4);
+
+        cout << "ID: " << id << ", Título: " << title << ", Autor: " << author
+             << ", Emprestado: " << (borrowed ? "Sim" : "Não") << ", Data de Cadastro: " << date << endl;
+    }
+
+    sqlite3_finalize(stmt);
+
+    if (!found)
+    {
+        cout << "Nenhum livro encontrado com o status de  " << (borrowed ? "Disponível" : "Emprestado") << "'." << endl;
+    }
 }

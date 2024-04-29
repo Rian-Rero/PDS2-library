@@ -1,5 +1,6 @@
 
 #include <iostream>
+#include <limits>
 #include "menu.hpp"
 #include "books.hpp"
 
@@ -7,8 +8,6 @@ using namespace std;
 
 int main()
 {
-    cout << "Seja Bem-Vindo ao LibrarySoftware" << endl;
-
     // Variables
 
     Menu *menu = new Menu();
@@ -20,7 +19,13 @@ int main()
     do
     {
         menu->displayMainMenu_();
-        cin >> choice;
+        if (!(cin >> choice))
+        {
+            cout << "Entrada inválida. Por favor, insira um número." << endl;
+            cin.clear();                                         // Limpa o estado de falha de cin
+            cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Limpa o buffer de entrada
+            continue;                                            // Reinicia o loop para pedir outra entrada válida
+        }
         switch (choice)
         {
         case 1:
@@ -28,8 +33,14 @@ int main()
             int loggedChoice;
             do
             {
-                menu->displayLoggedInMenu_();
-                cin >> loggedChoice;
+                menu->displayLoggedInAdminMenu_();
+                if (!(cin >> loggedChoice))
+                {
+                    cout << "Entrada inválida. Por favor, insira um número." << endl;
+                    cin.clear();
+                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                    continue;
+                }
                 switch (loggedChoice)
                 {
                 case 1:
@@ -37,13 +48,49 @@ int main()
                     books->createBook_();
                     break;
                 case 2:
+                    books->getAllBooks_();
+                    int allBooksChoice;
+                    do
+                    {
+                        menu->displayAllBooks_();
+                        if (!(cin >> allBooksChoice))
+                        {
+                            cout << "Entrada inválida. Por favor, insira um número." << endl;
+                            cin.clear();
+                            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                            continue;
+                        }
+                        switch (allBooksChoice)
+                        {
+                        case 1:
+                            books->getBook_();
+                            break;
+                        case 2:
+                            books->getBookByAuthor_();
+                            break;
+                        case 3:
+                            break;
+                        }
+                    } while (allBooksChoice != 3);
+                    break;
+                case 3:
+                    books->getAvailableBooks_(false);
+                    break;
+                case 4:
+                    books->getAvailableBooks_(true);
+                    break;
+                case 5:
+                    break;
+                case 6:
+                    break;
+                case 7:
                     cout << "Deslogando..." << endl;
                     break;
                 default:
                     cout << "Opção inválida. Por favor, escolha uma opção válida." << endl;
                     break;
                 }
-            } while (loggedChoice != 2);
+            } while (loggedChoice != 7);
             break;
         case 2:
             menu->registerUser_();
