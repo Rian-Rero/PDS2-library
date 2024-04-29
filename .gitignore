@@ -43,3 +43,8 @@ _.out
 # VsCode config
 
 .vscode/
+
+# build files
+
+build/
+

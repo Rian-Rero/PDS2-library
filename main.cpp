@@ -1,69 +1,110 @@
-#include "usuario.hpp"
-#include "livros.hpp"
-#include "aluguel.hpp"
-#include "historias.hpp"
-#include "emprestados.hpp"
-#include "pesquisa.hpp"
 
 #include <iostream>
+#include <limits>
+#include "menu.hpp"
+#include "books.hpp"
 
 using namespace std;
 
 int main()
 {
-    bool escolhaHistoria = true;
-    while (escolhaHistoria)
+    // Variables
+
+    Menu *menu = new Menu();
+    Books *books = new Books();
+    int choice;
+
+    // Main Menu
+
+    do
     {
-        cout << "Bem vindo ao LibrarySoftware" << endl;
-        cout << "O que você deseja? " << endl;
-        cout << "1 - Criar Usuário" << endl;
-        cout << "2 - Alugar um livro " << endl;
-        cout << "3 - Ver história de livros" << endl;
-        cout << "4 - Renovação da reserva" << endl;
-        cout << "5 - Cadastrar um novo livro" << endl;
-        cout << "6 - Pesquisar livros disponíveis" << endl;
-
-        int escolha;
-        cin >> escolha;
-
-        switch (escolha)
+        menu->displayMainMenu_();
+        if (!(cin >> choice))
+        {
+            cout << "Entrada inválida. Por favor, insira um número." << endl;
+            cin.clear();                                         // Limpa o estado de falha de cin
+            cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Limpa o buffer de entrada
+            continue;                                            // Reinicia o loop para pedir outra entrada válida
+        }
+        switch (choice)
         {
         case 1:
-        {
-            criarUsuario();
+            menu->login_();
+            int loggedChoice;
+            do
+            {
+                menu->displayLoggedInAdminMenu_();
+                if (!(cin >> loggedChoice))
+                {
+                    cout << "Entrada inválida. Por favor, insira um número." << endl;
+                    cin.clear();
+                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                    continue;
+                }
+                switch (loggedChoice)
+                {
+                case 1:
+                    menu->createBooks_();
+                    books->createBook_();
+                    break;
+                case 2:
+                    books->getAllBooks_();
+                    int allBooksChoice;
+                    do
+                    {
+                        menu->displayAllBooks_();
+                        if (!(cin >> allBooksChoice))
+                        {
+                            cout << "Entrada inválida. Por favor, insira um número." << endl;
+                            cin.clear();
+                            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                            continue;
+                        }
+                        switch (allBooksChoice)
+                        {
+                        case 1:
+                            books->getBook_();
+                            break;
+                        case 2:
+                            books->getBookByAuthor_();
+                            break;
+                        case 3:
+                            break;
+                        }
+                    } while (allBooksChoice != 3);
+                    break;
+                case 3:
+                    books->getAvailableBooks_(false);
+                    break;
+                case 4:
+                    books->getAvailableBooks_(true);
+                    break;
+                case 5:
+                    break;
+                case 6:
+                    break;
+                case 7:
+                    cout << "Deslogando..." << endl;
+                    break;
+                default:
+                    cout << "Opção inválida. Por favor, escolha uma opção válida." << endl;
+                    break;
+                }
+            } while (loggedChoice != 7);
             break;
-        }
         case 2:
-        {
-            alugarLivro();
+            menu->registerUser_();
             break;
-        }
         case 3:
-        {
-            listarHistorias();
+            menu->closeSoftware_();
             break;
-        }
-        case 4:
-        {
-            listarEmprestados();
-            break;
-        }
-        case 5:
-        {
-            criarLivro();
-            break;
-        }
-        case 6:
-        {
-            pesquisa();
-            break;
-        }
         default:
-            cout << "Opção inválida" << endl;
-            escolhaHistoria = false;
+            cout << "Opção inválida. Por favor, escolha uma opção válida." << endl;
             break;
         }
-    }
+    } while (choice != 3);
 
-    cout << "Trabalho Rodando " << endl;
+    delete menu;  // Desalocando a memória do Menu
+    delete books; // Desalocando a memória dos livros
+    return 0;
 }
