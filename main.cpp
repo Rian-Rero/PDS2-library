@@ -86,13 +86,16 @@ int main()
                 case 6:
                     break;
                 case 7:
+                    menu->HistoriasUsuarios_();
+                    break;
+                case 8:
                     cout << "Deslogando..." << endl;
                     break;
                 default:
                     cout << "Opção inválida. Por favor, escolha uma opção válida." << endl;
                     break;
                 }
-            } while (loggedChoice != 7);
+            } while (loggedChoice != 8);
             break;
         case 2:
             menu->registerUser_();
