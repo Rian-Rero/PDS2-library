@@ -14,6 +14,7 @@ public:
     void createBooks_();
     void closeSoftware_();
     void displayAllBooks_();
+    void HistoriasUsuarios_();
 };
 
 #endif // MENU_H
