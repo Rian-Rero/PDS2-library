@@ -19,6 +19,10 @@ public:
     void getBookByAuthor(const string &author);
     void getAvailableBooks(bool borrowed);
 
+    // Users
+
+    void createUser(const string &name, const string &email, const string &password);
+
 private:
     sqlite3 *db;
 };

@@ -12,7 +12,7 @@ DATABASE_TARGET = $(BUILD_DIR)/$(DATABASE_FILENAME)
 SRCS := $(wildcard $(SRC_DIR)/*.cpp)
 OBJS := $(patsubst $(SRC_DIR)/%.cpp,$(BUILD_DIR)/%.o,$(SRCS))
 INCLUDES := $(wildcard $(INCLUDE_DIR)/*.hpp)
-LIBS = -lsqlite3
+LIBS = -lsqlite3 -lcryptopp -lcurses
 
 all: $(TARGET) $(DATABASE_TARGET)
 

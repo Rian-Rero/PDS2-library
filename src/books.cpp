@@ -138,3 +138,7 @@ void Books::getAvailableBooks_(bool borrowed)
     }
     delete dataBase;
 }
+
+Books::~Books(){
+
+};
