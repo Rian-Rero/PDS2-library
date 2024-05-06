@@ -37,3 +37,45 @@ void Users::createUser_()
 
     delete dataBase;
 }
+
+string Users::getEmail()
+{
+    return email;
+}
+
+string Users::getName()
+{
+    return name;
+}
+
+void Users::setName(string name)
+{
+    this->name = name;
+}
+void Users::setEmail(string email)
+{
+    this->email = email;
+}
+
+void Users::login_()
+{
+    Database *dataBase = new Database("./database/LibraryDevelopmentDB.db");
+    cin.ignore();
+    string email, password;
+    cout << "Digite o email do usuário: ";
+    getline(cin, email);
+
+    cout << "Digite a senha do usuário: ";
+    getline(cin, password);
+
+    try
+    {
+        dataBase->login(email, password);
+    }
+    catch (const exception &e)
+    {
+        cerr << "Erro ao logar o usuário: " << e.what() << endl;
+    }
+
+    delete dataBase;
+}

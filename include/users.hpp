@@ -21,12 +21,17 @@ public:
 
     void getAllUsers_();
     void getUser_();
+    string getName();
+    string getEmail();
 
     // Setters
 
     void createUser_();
     void updateUser_();
     void deleteUser_();
+    void login_();
+    void setName(string name);
+    void setEmail(string email);
 
     // Destructor
 };

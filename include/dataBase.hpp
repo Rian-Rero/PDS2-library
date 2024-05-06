@@ -22,6 +22,7 @@ public:
     // Users
 
     void createUser(const string &name, const string &email, const string &password);
+    bool login(const string &email, const string &password);
 
 private:
     sqlite3 *db;

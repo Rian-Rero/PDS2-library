@@ -35,6 +35,7 @@ int main()
             int loggedChoice;
             do
             {
+                users->login_();
                 menu->displayLoggedInAdminMenu_();
                 if (!(cin >> loggedChoice))
                 {
