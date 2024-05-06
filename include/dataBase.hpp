@@ -1,6 +1,7 @@
 #ifndef DATABASE_H
 #define DATABASE_H
 
+#include "users.hpp"
 #include <sqlite3.h>
 #include <string>
 
@@ -22,7 +23,7 @@ public:
     // Users
 
     void createUser(const string &name, const string &email, const string &password);
-    bool login(const string &email, const string &password);
+    bool login(const string &email, const string &password, Users *users);
 
 private:
     sqlite3 *db;

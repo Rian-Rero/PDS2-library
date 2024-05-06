@@ -57,7 +57,7 @@ void Users::setEmail(string email)
     this->email = email;
 }
 
-void Users::login_()
+void Users::login_(Users *users)
 {
     Database *dataBase = new Database("./database/LibraryDevelopmentDB.db");
     cin.ignore();
@@ -70,7 +70,7 @@ void Users::login_()
 
     try
     {
-        dataBase->login(email, password);
+        dataBase->login(email, password, users);
     }
     catch (const exception &e)
     {

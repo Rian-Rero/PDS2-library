@@ -29,7 +29,7 @@ public:
     void createUser_();
     void updateUser_();
     void deleteUser_();
-    void login_();
+    void login_(Users *users);
     void setName(string name);
     void setEmail(string email);
 

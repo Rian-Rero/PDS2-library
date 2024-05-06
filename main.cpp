@@ -35,8 +35,8 @@ int main()
             int loggedChoice;
             do
             {
-                users->login_();
-                menu->displayLoggedInAdminMenu_();
+                users->login_(users);
+                menu->displayLoggedInAdminMenu_(users);
                 if (!(cin >> loggedChoice))
                 {
                     cout << "Entrada inválida. Por favor, insira um número." << endl;

@@ -1,4 +1,5 @@
 #include "menu.hpp"
+#include "users.hpp"
 #include <iostream>
 
 using namespace std;
@@ -15,9 +16,8 @@ void Menu::displayMainMenu_()
     cout << "Escolha uma opção: ";
 }
 
-void Menu::displayLoggedInAdminMenu_()
+void Menu::displayLoggedInAdminMenu_(Users *user)
 {
-    Users *user = new Users();
 
     cout << "==============================" << endl;
     cout << "         Olá " << user->getName() << endl;

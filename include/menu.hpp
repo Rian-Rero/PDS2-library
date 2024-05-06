@@ -1,13 +1,14 @@
 #ifndef MENU_H
 #define MENU_H
 
+#include "users.hpp"
 #include <string>
 
 class Menu
 {
 public:
     void displayMainMenu_();
-    void displayLoggedInAdminMenu_();
+    void displayLoggedInAdminMenu_(Users *user);
     void displayLoggedInMenu_();
     void login_();
     void registerUser_();

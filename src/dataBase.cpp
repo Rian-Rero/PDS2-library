@@ -1,4 +1,5 @@
 #include "dataBase.hpp"
+#include "users.hpp"
 #include <iostream>
 #include <cryptopp/cryptlib.h>
 #include <cryptopp/sha.h>     // Para SHA-256
@@ -320,7 +321,7 @@ void Database::createUser(const string &nome, const string &email, const string 
     sqlite3_finalize(stmt);
 }
 
-bool Database::login(const string &email, const string &senha)
+bool Database::login(const string &email, const string &senha, Users *users)
 {
     const char *sql_select_user = "SELECT * FROM Usuarios WHERE Email = ?;";
 
@@ -355,14 +356,12 @@ bool Database::login(const string &email, const string &senha)
         encoder.Attach(new StringSink(senha_fornecida_hash));
         encoder.Put(digest, sizeof(digest));
         encoder.MessageEnd();
-        Users user;
         if (senha_hash == senha_fornecida_hash)
         {
             cout << "Login realizado com sucesso!" << endl;
             cout << "Nome: " << name_db << ", Email: " << email_db << endl;
-            Users user;
-            user.setEmail(reinterpret_cast<const char *>(email_db));
-            user.setName(reinterpret_cast<const char *>(name_db));
+            users->setEmail(reinterpret_cast<const char *>(email_db));
+            users->setName(reinterpret_cast<const char *>(name_db));
             return true;
         }
         else
