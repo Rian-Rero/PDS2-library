@@ -25,7 +25,7 @@ Database::Database(const string &filename)
     const char *sql_create_table_livros =
         "CREATE TABLE IF NOT EXISTS Livros ("
         "ID INTEGER PRIMARY KEY AUTOINCREMENT,"
-        "Titulo TEXT NOT NULL"
+        "Titulo TEXT NOT NULL,"
         "Autor TEXT NOT NULL,"
         "Emprestado INTEGER NOT NULL,"
         "DataCadastro TEXT NOT NULL"
