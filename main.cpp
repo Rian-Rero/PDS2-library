@@ -90,6 +90,9 @@ int main()
                     menu->HistoriasUsuarios_();
                     break;
                 case 8:
+                    users->getAllUsers_();
+                    users->updateUser_();
+                case 9:
                     cout << "Deslogando..." << endl;
                     break;
                 default:

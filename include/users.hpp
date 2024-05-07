@@ -12,6 +12,7 @@ private:
     string name;
     string email;
     string password;
+    int admin;
 
 public:
     // Constructor
@@ -23,6 +24,7 @@ public:
     void getUser_();
     string getName();
     string getEmail();
+    int isAdmin();
 
     // Setters
 
@@ -32,6 +34,7 @@ public:
     void login_(Users *users);
     void setName(string name);
     void setEmail(string email);
+    void setAdmin(int admin);
 
     // Destructor
 };

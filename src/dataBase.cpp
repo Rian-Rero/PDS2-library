@@ -45,7 +45,8 @@ Database::Database(const string &filename)
         "ID INTEGER PRIMARY KEY AUTOINCREMENT,"
         "Nome TEXT NOT NULL,"
         "Email TEXT NOT NULL,"
-        "Senha TEXT NOT NULL"
+        "Senha TEXT NOT NULL,"
+        "Admin INTEGER NOT NULL DEFAULT 0"
         ");";
 
     rc = sqlite3_exec(db, sql_create_table_usuarios, nullptr, nullptr, nullptr);
@@ -317,6 +318,59 @@ void Database::createUser(const string &nome, const string &email, const string 
     {
         cout << "Usuário criado com sucesso!" << endl;
     }
+
+    sqlite3_finalize(stmt);
+}
+
+void Database::getUsers()
+{
+    const char *sql_select_all = "SELECT * FROM Usuarios;";
+
+    sqlite3_stmt *stmt;
+    int rc = sqlite3_prepare_v2(db, sql_select_all, -1, &stmt, nullptr);
+    if (rc != SQLITE_OK)
+    {
+        cerr << "Erro ao preparar a consulta: " << sqlite3_errmsg(db) << endl;
+        return;
+    }
+
+    cout << "Todos os usuários:\n";
+
+    while ((rc = sqlite3_step(stmt)) == SQLITE_ROW)
+    {
+        int id = sqlite3_column_int(stmt, 0);
+        const unsigned char *name = sqlite3_column_text(stmt, 1);
+        const unsigned char *email = sqlite3_column_text(stmt, 2);
+        const unsigned char *senha = sqlite3_column_text(stmt, 3);
+        int admin = sqlite3_column_int(stmt, 4);
+
+        cout << "ID: " << id << ", Nome: " << name << ", Email: " << email
+             << ", Senha: " << senha << ", Admin: " << (admin ? "Sim" : "Não") << endl;
+    }
+
+    sqlite3_finalize(stmt);
+}
+
+void Database::updateUser(int ID)
+{
+    const char *sql_update = "UPDATE Usuarios SET Admin = 1 WHERE ID = ?;";
+
+    sqlite3_stmt *stmt;
+    int rc = sqlite3_prepare_v2(db, sql_update, -1, &stmt, nullptr);
+    if (rc != SQLITE_OK)
+    {
+        cerr << "Erro ao preparar a consulta: " << sqlite3_errmsg(db) << endl;
+        return;
+    }
+
+    sqlite3_bind_int(stmt, 1, ID);
+
+    rc = sqlite3_step(stmt);
+    if (rc != SQLITE_DONE)
+        cerr << "Erro ao atualizar o usuário: " << sqlite3_errmsg(db) << endl;
+
+    else
+        cout << "Usuário atualizado com sucesso!" << endl;
 
     sqlite3_finalize(stmt);
 }

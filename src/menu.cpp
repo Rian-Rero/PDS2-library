@@ -29,7 +29,8 @@ void Menu::displayLoggedInAdminMenu_(Users *user)
     cout << "5. Ver seus Livros Alugados" << endl;
     cout << "6. Ver histórico de aluguéis" << endl;
     cout << "7. Acesssar histórias de usuários" << endl;
-    cout << "8. Logout" << endl;
+    cout << "8. Conceder permissão de administrador" << endl;
+    cout << "9. Logout" << endl;
     cout << "==============================" << endl;
     cout << "Escolha uma opção: ";
     delete user;

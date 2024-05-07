@@ -24,6 +24,8 @@ public:
 
     void createUser(const string &name, const string &email, const string &password);
     bool login(const string &email, const string &password, Users *users);
+    void getUsers();
+    void updateUser(int ID);
 
 private:
     sqlite3 *db;
