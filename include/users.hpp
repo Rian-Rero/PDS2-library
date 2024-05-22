@@ -31,11 +31,12 @@ public:
     void createUser_();
     void updateUser_();
     void deleteUser_();
-    void login_(Users *users);
+    bool login_(Users *users);
     void setName(string name);
     void setEmail(string email);
     void setAdmin(int admin);
 
     // Destructor
+    ~Users();
 };
 #endif // USERS_H

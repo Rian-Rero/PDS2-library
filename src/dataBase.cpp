@@ -6,6 +6,8 @@
 #include <cryptopp/hex.h>     // Para codificação hexadecimal
 #include <cryptopp/filters.h> // Para Crypto++ filters
 #include <sstream>            // Adicionando inclusão para stringstream
+#include <thread>             // Para std::this_thread::sleep_for
+#include <chrono>             // Para std::chrono::milliseconds
 
 using namespace std;
 using namespace CryptoPP;
@@ -341,11 +343,10 @@ void Database::getUsers()
         int id = sqlite3_column_int(stmt, 0);
         const unsigned char *name = sqlite3_column_text(stmt, 1);
         const unsigned char *email = sqlite3_column_text(stmt, 2);
-        const unsigned char *senha = sqlite3_column_text(stmt, 3);
         int admin = sqlite3_column_int(stmt, 4);
 
         cout << "ID: " << id << ", Nome: " << name << ", Email: " << email
-             << ", Senha: " << senha << ", Admin: " << (admin ? "Sim" : "Não") << endl;
+             << ", Admin: " << (admin ? "Sim" : "Não") << endl;
     }
 
     sqlite3_finalize(stmt);
@@ -416,17 +417,20 @@ bool Database::login(const string &email, const string &senha, Users *users)
             cout << "Nome: " << name_db << ", Email: " << email_db << endl;
             users->setEmail(reinterpret_cast<const char *>(email_db));
             users->setName(reinterpret_cast<const char *>(name_db));
+            sqlite3_finalize(stmt);
             return true;
         }
         else
         {
             cerr << "Senha incorreta." << endl;
+            sqlite3_finalize(stmt);
             return false;
         }
     }
     else
     {
         cerr << "Usuário não encontrado." << endl;
+        sqlite3_finalize(stmt);
         return false;
     }
 

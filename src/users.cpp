@@ -12,9 +12,11 @@ Users::Users()
     password = "";
 };
 
+Users::~Users(){};
+
 void Users::createUser_()
 {
-    Database *dataBase = new Database("./database/LibraryDevelopmentDB2.db");
+    Database *dataBase = new Database("./database/LibraryDevelopmentDB.db");
     cin.ignore();
     string name, email, password;
     cout << "Digite o nome do usuário: ";
@@ -66,9 +68,10 @@ void Users::setAdmin(int admin)
 {
     this->admin = admin;
 }
-void Users::login_(Users *users)
+
+bool Users::login_(Users *users)
 {
-    Database *dataBase = new Database("./database/LibraryDevelopmentDB2.db");
+    Database *dataBase = new Database("./database/LibraryDevelopmentDB.db");
     cin.ignore();
     string email, password;
     cout << "Digite o email do usuário: ";
@@ -77,9 +80,13 @@ void Users::login_(Users *users)
     cout << "Digite a senha do usuário: ";
     getline(cin, password);
 
+    bool loginSuccessful = false;
     try
     {
-        dataBase->login(email, password, users);
+        if (dataBase->login(email, password, users))
+            loginSuccessful = true;
+        else
+            loginSuccessful = false;
     }
     catch (const exception &e)
     {
@@ -87,11 +94,12 @@ void Users::login_(Users *users)
     }
 
     delete dataBase;
+    return loginSuccessful;
 }
 
 void Users::getAllUsers_()
 {
-    Database *dataBase = new Database("./database/LibraryDevelopmentDB2.db");
+    Database *dataBase = new Database("./database/LibraryDevelopmentDB.db");
     try
     {
         dataBase->getUsers();
@@ -106,7 +114,7 @@ void Users::getAllUsers_()
 
 void Users::updateUser_()
 {
-    Database *dataBase = new Database("./database/LibraryDevelopmentDB2.db");
+    Database *dataBase = new Database("./database/LibraryDevelopmentDB.db");
     cin.ignore();
     int ID;
     cout << "Digite o ID do usuário que deseja tornar administrador: ";

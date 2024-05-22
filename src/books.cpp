@@ -17,7 +17,7 @@ Books::Books()
 
 void Books::createBook_()
 {
-    Database *dataBase = new Database("./database/LibraryDevelopmentDB2.db");
+    Database *dataBase = new Database("./database/LibraryDevelopmentDB.db");
 
     string title, author, dateStr;
     bool borrowed = false;
@@ -74,7 +74,7 @@ void Books::createBook_()
 }
 void Books::getAllBooks_()
 {
-    Database *dataBase = new Database("./database/LibraryDevelopmentDB2.db");
+    Database *dataBase = new Database("./database/LibraryDevelopmentDB.db");
 
     try
     {
@@ -89,7 +89,7 @@ void Books::getAllBooks_()
 
 void Books::getBook_()
 {
-    Database *dataBase = new Database("./database/LibraryDevelopmentDB2.db");
+    Database *dataBase = new Database("./database/LibraryDevelopmentDB.db");
     string name;
     cin.ignore();
     cout << "Digite o nome do livro: ";
@@ -107,7 +107,7 @@ void Books::getBook_()
 
 void Books::getBookByAuthor_()
 {
-    Database *dataBase = new Database("./database/LibraryDevelopmentDB2.db");
+    Database *dataBase = new Database("./database/LibraryDevelopmentDB.db");
     string author;
     cin.ignore();
     cout << "Digite o nome do autor: ";
@@ -126,7 +126,7 @@ void Books::getBookByAuthor_()
 
 void Books::getAvailableBooks_(bool borrowed)
 {
-    Database *dataBase = new Database("./database/LibraryDevelopmentDB2.db");
+    Database *dataBase = new Database("./database/LibraryDevelopmentDB.db");
 
     try
     {
