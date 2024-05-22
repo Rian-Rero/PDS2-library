@@ -1,3 +1,4 @@
+
 #include <iostream>
 #include <limits>
 #include "menu.hpp"
@@ -9,12 +10,14 @@ using namespace std;
 int main()
 {
     // Variables
+
     Menu *menu = new Menu();
     Books *books = new Books();
     Users *users = new Users();
     int choice;
 
     // Main Menu
+
     do
     {
         menu->displayMainMenu_();
@@ -28,10 +31,13 @@ int main()
         switch (choice)
         {
         case 1:
-            if (users->login_(users))
+            int loggedChoice;
+            do
             {
-                int loggedChoice;
-                do
+                menu->login_();
+                bool isLogged = false;
+                isLogged = users->login_(users);
+                if (isLogged)
                 {
                     menu->displayLoggedInAdminMenu_(users);
                     if (!(cin >> loggedChoice))
@@ -70,9 +76,6 @@ int main()
                                 break;
                             case 3:
                                 break;
-                            default:
-                                cout << "Opção inválida. Por favor, escolha uma opção válida." << endl;
-                                break;
                             }
                         } while (allBooksChoice != 3);
                         break;
@@ -92,7 +95,6 @@ int main()
                     case 8:
                         users->getAllUsers_();
                         users->updateUser_();
-                        break;
                     case 9:
                         cout << "Deslogando..." << endl;
                         break;
@@ -100,8 +102,9 @@ int main()
                         cout << "Opção inválida. Por favor, escolha uma opção válida." << endl;
                         break;
                     }
-                } while (loggedChoice != 9);
-            }
+                }
+
+            } while (loggedChoice != 8);
             break;
         case 2:
             menu->registerUser_();
@@ -114,7 +117,7 @@ int main()
             cout << "Opção inválida. Por favor, escolha uma opção válida." << endl;
             break;
         }
-    } while (choice != 5);
+    } while (choice != 3);
 
     delete menu;  // Desalocando a memória do Menu
     delete books; // Desalocando a memória dos livros
