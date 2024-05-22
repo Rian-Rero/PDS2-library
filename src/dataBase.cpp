@@ -285,8 +285,8 @@ void Database::createUser(const string &nome, const string &email, const string 
 
     // Gerar hash da senha
     SHA256 sha256;
-    byte digest[SHA256::DIGESTSIZE];
-    sha256.CalculateDigest(digest, reinterpret_cast<const byte *>(senha.c_str()), senha.length());
+    CryptoPP::byte digest[SHA256::DIGESTSIZE];
+    sha256.CalculateDigest(digest, reinterpret_cast<const CryptoPP::byte *>(senha.c_str()), senha.length());
 
     // Converter o hash em uma string hexadecimal
     HexEncoder encoder;
@@ -403,8 +403,8 @@ bool Database::login(const string &email, const string &senha, Users *users)
 
         // Comparar as senhas
         SHA256 sha256;
-        byte digest[SHA256::DIGESTSIZE];
-        sha256.CalculateDigest(digest, reinterpret_cast<const byte *>(senha.c_str()), senha.length());
+        CryptoPP::byte digest[SHA256::DIGESTSIZE];
+        sha256.CalculateDigest(digest, reinterpret_cast<const CryptoPP::byte *>(senha.c_str()), senha.length());
 
         HexEncoder encoder;
         string senha_fornecida_hash;
