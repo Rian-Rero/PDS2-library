@@ -33,7 +33,6 @@ void Menu::displayLoggedInAdminMenu_(Users *user)
     cout << "9. Logout" << endl;
     cout << "==============================" << endl;
     cout << "Escolha uma opção: ";
-    delete user;
 }
 
 void Menu::displayLoggedInMenu_()

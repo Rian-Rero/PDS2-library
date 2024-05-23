@@ -51,7 +51,6 @@ void Application::handleLogin()
 
 void Application::handleLoggedInMenu()
 {
-    std::cout << "oi" << endl;
     menu->displayLoggedInAdminMenu_(users);
     if (!(cin >> loggedChoice))
     {
