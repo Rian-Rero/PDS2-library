@@ -45,8 +45,11 @@ void Application::displayMainMenu()
 void Application::handleLogin()
 {
     menu->login_();
-    users->login_(users);
-    handleLoggedInMenu();
+    isLogged = users->login_(users);
+    if (isLogged)
+    {
+        handleLoggedInMenu();
+    }
 }
 
 void Application::handleLoggedInMenu()
@@ -70,9 +73,11 @@ void Application::handleLoggedInMenu()
         break;
     case 3:
         books->getAvailableBooks_(false);
+        handleLoggedInMenu();
         break;
     case 4:
         books->getAvailableBooks_(true);
+        handleLoggedInMenu();
         break;
     case 5:
         // Adicione as operações necessárias para a opção 5
