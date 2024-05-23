@@ -1,10 +1,13 @@
 #include "dataBase.hpp"
+#include "users.hpp"
 #include <iostream>
 #include <cryptopp/cryptlib.h>
 #include <cryptopp/sha.h>     // Para SHA-256
 #include <cryptopp/hex.h>     // Para codificação hexadecimal
 #include <cryptopp/filters.h> // Para Crypto++ filters
 #include <sstream>            // Adicionando inclusão para stringstream
+#include <thread>             // Para std::this_thread::sleep_for
+#include <chrono>             // Para std::chrono::milliseconds
 
 using namespace std;
 using namespace CryptoPP;
@@ -44,7 +47,8 @@ Database::Database(const string &filename)
         "ID INTEGER PRIMARY KEY AUTOINCREMENT,"
         "Nome TEXT NOT NULL,"
         "Email TEXT NOT NULL,"
-        "Senha TEXT NOT NULL"
+        "Senha TEXT NOT NULL,"
+        "Admin INTEGER NOT NULL DEFAULT 0"
         ");";
 
     rc = sqlite3_exec(db, sql_create_table_usuarios, nullptr, nullptr, nullptr);
@@ -281,8 +285,15 @@ void Database::createUser(const string &nome, const string &email, const string 
 
     // Gerar hash da senha
     SHA256 sha256;
+    CryptoPP::byte digest[SHA256::DIGESTSIZE];
+    sha256.CalculateDigest(digest, reinterpret_cast<const CryptoPP::byte *>(senha.c_str()), senha.length());
+
+    // Converter o hash em uma string hexadecimal
+    HexEncoder encoder;
     string senha_hash;
-    StringSource(senha, true, new HashFilter(sha256, new HexEncoder(new StringSink(senha_hash))));
+    encoder.Attach(new CryptoPP::StringSink(senha_hash));
+    encoder.Put(digest, sizeof(digest));
+    encoder.MessageEnd();
 
     // Inserir usuário no banco de dados
     const char *sql_insert =
@@ -308,6 +319,119 @@ void Database::createUser(const string &nome, const string &email, const string 
     else
     {
         cout << "Usuário criado com sucesso!" << endl;
+    }
+
+    sqlite3_finalize(stmt);
+}
+
+void Database::getUsers()
+{
+    const char *sql_select_all = "SELECT * FROM Usuarios;";
+
+    sqlite3_stmt *stmt;
+    int rc = sqlite3_prepare_v2(db, sql_select_all, -1, &stmt, nullptr);
+    if (rc != SQLITE_OK)
+    {
+        cerr << "Erro ao preparar a consulta: " << sqlite3_errmsg(db) << endl;
+        return;
+    }
+
+    cout << "Todos os usuários:\n";
+
+    while ((rc = sqlite3_step(stmt)) == SQLITE_ROW)
+    {
+        int id = sqlite3_column_int(stmt, 0);
+        const unsigned char *name = sqlite3_column_text(stmt, 1);
+        const unsigned char *email = sqlite3_column_text(stmt, 2);
+        int admin = sqlite3_column_int(stmt, 4);
+
+        cout << "ID: " << id << ", Nome: " << name << ", Email: " << email
+             << ", Admin: " << (admin ? "Sim" : "Não") << endl;
+    }
+
+    sqlite3_finalize(stmt);
+}
+
+void Database::updateUser(int ID)
+{
+    const char *sql_update = "UPDATE Usuarios SET Admin = 1 WHERE ID = ?;";
+
+    sqlite3_stmt *stmt;
+    int rc = sqlite3_prepare_v2(db, sql_update, -1, &stmt, nullptr);
+    if (rc != SQLITE_OK)
+    {
+        cerr << "Erro ao preparar a consulta: " << sqlite3_errmsg(db) << endl;
+        return;
+    }
+
+    sqlite3_bind_int(stmt, 1, ID);
+
+    rc = sqlite3_step(stmt);
+    if (rc != SQLITE_DONE)
+        cerr << "Erro ao atualizar o usuário: " << sqlite3_errmsg(db) << endl;
+
+    else
+        cout << "Usuário atualizado com sucesso!" << endl;
+
+    sqlite3_finalize(stmt);
+}
+
+bool Database::login(const string &email, const string &senha, Users *users)
+{
+    const char *sql_select_user = "SELECT * FROM Usuarios WHERE Email = ?;";
+
+    sqlite3_stmt *stmt;
+    int rc = sqlite3_prepare_v2(db, sql_select_user, -1, &stmt, nullptr);
+    if (rc != SQLITE_OK)
+    {
+        cerr << "Erro ao preparar a consulta: " << sqlite3_errmsg(db) << endl;
+        return false;
+    }
+
+    sqlite3_bind_text(stmt, 1, email.c_str(), -1, SQLITE_STATIC);
+
+    // Verificar se o usuário com o email fornecido existe
+    if (sqlite3_step(stmt) == SQLITE_ROW)
+    {
+        // Usuário encontrado
+        const unsigned char *name_db = sqlite3_column_text(stmt, 1);
+        const unsigned char *email_db = sqlite3_column_text(stmt, 2);
+        const unsigned char *senha_db = sqlite3_column_text(stmt, 3);
+
+        // Descriptografar a senha do banco de dados
+        string senha_hash(reinterpret_cast<const char *>(senha_db));
+
+        // Comparar as senhas
+        SHA256 sha256;
+        CryptoPP::byte digest[SHA256::DIGESTSIZE];
+        sha256.CalculateDigest(digest, reinterpret_cast<const CryptoPP::byte *>(senha.c_str()), senha.length());
+
+        HexEncoder encoder;
+        string senha_fornecida_hash;
+        encoder.Attach(new StringSink(senha_fornecida_hash));
+        encoder.Put(digest, sizeof(digest));
+        encoder.MessageEnd();
+        if (senha_hash == senha_fornecida_hash)
+        {
+            cout << "Login realizado com sucesso!" << endl;
+            cout << "Nome: " << name_db << ", Email: " << email_db << endl;
+            users->setEmail(reinterpret_cast<const char *>(email_db));
+            users->setName(reinterpret_cast<const char *>(name_db));
+            sqlite3_finalize(stmt);
+            return true;
+        }
+        else
+        {
+            cerr << "Senha incorreta." << endl;
+            sqlite3_finalize(stmt);
+            return false;
+        }
+    }
+    else
+    {
+        cerr << "Usuário não encontrado." << endl;
+        sqlite3_finalize(stmt);
+        return false;
     }
 
     sqlite3_finalize(stmt);
