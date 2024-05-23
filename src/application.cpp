@@ -45,15 +45,8 @@ void Application::displayMainMenu()
 void Application::handleLogin()
 {
     menu->login_();
-    isLogged = users->login_(users);
-    if (isLogged)
-    {
-        handleLoggedInMenu();
-    }
-    else
-    {
-        cout << "Falha no login. Por favor, tente novamente." << endl;
-    }
+    users->login_(users);
+    handleLoggedInMenu();
 }
 
 void Application::handleLoggedInMenu()
