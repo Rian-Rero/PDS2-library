@@ -3,7 +3,7 @@
 
 using namespace std;
 
-UserHistory::Historys()
+UserHistory::UserHistory()
 {
     cout << "Cadastro de Usuários:" << endl;
     cout << "Como um novo membro da comunidade da biblioteca, desejo poder criar uma conta no sistema da biblioteca para acessar os serviços oferecidos, como pesquisar e reservar livros." << endl;

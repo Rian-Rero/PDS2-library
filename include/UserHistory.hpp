@@ -4,7 +4,7 @@
 class UserHistory
 {
 public:
-    void Historys();
+    UserHistory();
 };
 
 #endif // USERHISTORY_H
