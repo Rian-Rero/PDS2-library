@@ -87,8 +87,7 @@ void Application::handleLoggedInMenu()
         // Adicione as operações necessárias para a opção 6
         break;
     case 7:
-        UserHistory->getHistory_();
-        //menu->HistoriasUsuarios_();
+        UserHistory();
         break;
     case 8:
         users->getAllUsers_();

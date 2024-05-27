@@ -1,5 +1,5 @@
-#ifndef MENU_H
-#define MENU_H
+#ifndef USER_HISTORY_HPP
+#define USER_HISTORY_HPP
 
 class UserHistory
 {
@@ -7,4 +7,4 @@ public:
     UserHistory();
 };
 
-#endif // USERHISTORY_H
+#endif // USER_HISTORY_HPP
