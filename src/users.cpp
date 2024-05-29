@@ -2,6 +2,7 @@
 #include <iostream>
 #include "users.hpp"
 #include "dataBase.hpp"
+#include "databaseConfig.hpp"
 
 using namespace std;
 
@@ -16,7 +17,8 @@ Users::~Users(){};
 
 void Users::createUser_()
 {
-    Database *dataBase = new Database("./database/LibraryDevelopmentDB.db");
+    DataBaseConfig dataBaseName;
+    Database *dataBase = new Database(dataBaseName.getDataBaseFileName());
     cin.ignore();
     string name, email, password;
     cout << "Digite o nome do usuário: ";
@@ -71,7 +73,8 @@ void Users::setAdmin(int admin)
 
 bool Users::login_(Users *users)
 {
-    Database *dataBase = new Database("./database/LibraryDevelopmentDB.db");
+    DataBaseConfig dataBaseName;
+    Database *dataBase = new Database(dataBaseName.getDataBaseFileName());
     cin.ignore();
     string email, password;
     cout << "Digite o email do usuário: ";
@@ -94,12 +97,14 @@ bool Users::login_(Users *users)
     }
 
     delete dataBase;
+
     return loginSuccessful;
 }
 
 void Users::getAllUsers_()
 {
-    Database *dataBase = new Database("./database/LibraryDevelopmentDB.db");
+    DataBaseConfig dataBaseName;
+    Database *dataBase = new Database(dataBaseName.getDataBaseFileName());
     try
     {
         dataBase->getUsers();
@@ -114,7 +119,8 @@ void Users::getAllUsers_()
 
 void Users::updateUser_()
 {
-    Database *dataBase = new Database("./database/LibraryDevelopmentDB.db");
+    DataBaseConfig dataBaseName;
+    Database *dataBase = new Database(dataBaseName.getDataBaseFileName());
     cin.ignore();
     int ID;
     cout << "Digite o ID do usuário que deseja tornar administrador: ";

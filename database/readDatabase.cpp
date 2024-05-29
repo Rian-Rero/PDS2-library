@@ -40,7 +40,8 @@ int main(int argc, char *argv[])
     char *zErrMsg = 0;
     int rc;
 
-    rc = sqlite3_open("./database/LibraryDevelopmentDB.db", &db);
+    // Convert std::string to const char*
+    rc = sqlite3_open("./database/LibraryDevelopmentDB3000.db", &db);
 
     if (rc)
     {
@@ -80,5 +81,6 @@ int main(int argc, char *argv[])
     }
 
     sqlite3_close(db);
+
     return 0;
 }

@@ -2,6 +2,7 @@
 #include "dataBase.hpp"
 #include <iostream>
 #include <string>
+#include "databaseConfig.hpp"
 
 using namespace std;
 
@@ -22,7 +23,8 @@ void Employeers::setPosition(string position)
 
 void Employeers::createEmployeer_()
 {
-    Database *dataBase = new Database("./database/LibraryDevelopmentDB.db");
+    DataBaseConfig dataBaseName;
+    Database *dataBase = new Database(dataBaseName.getDataBaseFileName());
     cin.ignore();
     string name, email, password, position;
     cout << "Digite o nome do funcionário: ";
@@ -57,7 +59,8 @@ void Employeers::createEmployeer_()
 
 void Employeers::updateEmployeerPosition_()
 {
-    Database *dataBase = new Database("./database/LibraryDevelopmentDB.db");
+    DataBaseConfig dataBaseName;
+    Database *dataBase = new Database(dataBaseName.getDataBaseFileName());
     cin.ignore();
     int ID;
     string position;
