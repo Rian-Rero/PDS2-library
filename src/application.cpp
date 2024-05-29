@@ -138,6 +138,7 @@ void Application::handleViewBooks()
             break;
         case 3:
             handleLoggedInMenu();
+            break;
         default:
             cout << "Opção inválida. Por favor, escolha uma opção válida." << endl;
             break;
