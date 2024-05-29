@@ -48,7 +48,8 @@ Database::Database(const string &filename)
         "Nome TEXT NOT NULL,"
         "Email TEXT NOT NULL,"
         "Senha TEXT NOT NULL,"
-        "Admin INTEGER NOT NULL DEFAULT 0"
+        "Admin INTEGER NOT NULL DEFAULT 0,"
+        "Cargo TEXT"
         ");";
 
     rc = sqlite3_exec(db, sql_create_table_usuarios, nullptr, nullptr, nullptr);
@@ -433,6 +434,61 @@ bool Database::login(const string &email, const string &senha, Users *users)
         sqlite3_finalize(stmt);
         return false;
     }
+
+    sqlite3_finalize(stmt);
+}
+
+int Database::getUserByEmail(const string &email)
+{
+    const char *sql_select_user = "SELECT * FROM Usuarios WHERE Email = ?;";
+
+    sqlite3_stmt *stmt;
+    int rc = sqlite3_prepare_v2(db, sql_select_user, -1, &stmt, nullptr);
+    if (rc != SQLITE_OK)
+    {
+        cerr << "Erro ao preparar a consulta: " << sqlite3_errmsg(db) << endl;
+        sqlite3_finalize(stmt);
+        return -1;
+    }
+
+    sqlite3_bind_text(stmt, 1, email.c_str(), -1, SQLITE_STATIC);
+
+    if (sqlite3_step(stmt) == SQLITE_ROW)
+    {
+        int id = sqlite3_column_int(stmt, 0);
+        sqlite3_finalize(stmt);
+        return id;
+    }
+    else
+    {
+        cout << "Usuário não encontrado." << endl;
+        sqlite3_finalize(stmt);
+        return -1;
+    }
+}
+
+// Employeers
+
+void Database::updateEmployeerPosition(int ID, const string position)
+{
+    const char *sql_update = "UPDATE Usuarios SET Cargo = ? WHERE ID = ?;";
+
+    sqlite3_stmt *stmt;
+    int rc = sqlite3_prepare_v2(db, sql_update, -1, &stmt, nullptr);
+    if (rc != SQLITE_OK)
+    {
+        cerr << "Erro ao preparar a consulta: " << sqlite3_errmsg(db) << endl;
+        return;
+    }
+
+    sqlite3_bind_text(stmt, 1, position.c_str(), -1, SQLITE_STATIC);
+    sqlite3_bind_int(stmt, 2, ID);
+
+    rc = sqlite3_step(stmt);
+    if (rc != SQLITE_DONE)
+        cerr << "Erro ao atualizar o cargo do funcionário: " << sqlite3_errmsg(db) << endl;
+    else
+        cout << "Cargo do funcionário atualizado com sucesso!" << endl;
 
     sqlite3_finalize(stmt);
 }

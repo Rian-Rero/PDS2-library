@@ -93,6 +93,9 @@ void Application::handleLoggedInMenu()
         users->updateUser_();
         break;
     case 9:
+        employeers->createEmployeer_();
+        break;
+    case 10:
         cout << "Deslogando..." << endl;
         isLogged = false;
         break;
