@@ -1,6 +1,7 @@
 #include <iostream>
 #include <limits>
 #include "application.hpp"
+#include "UserHistory.hpp"
 
 using namespace std;
 
@@ -86,7 +87,8 @@ void Application::handleLoggedInMenu()
         // Adicione as operações necessárias para a opção 6
         break;
     case 7:
-        menu->HistoriasUsuarios_();
+        UserHistory();
+        handleLoggedInMenu();
         break;
     case 8:
         users->getAllUsers_();
