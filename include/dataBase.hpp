@@ -26,6 +26,11 @@ public:
     bool login(const string &email, const string &password, Users *users);
     void getUsers();
     void updateUser(int ID);
+    int getUserByEmail(const string &email);
+
+    // Employeers
+
+    void updateEmployeerPosition(int ID, const string position);
 
 private:
     sqlite3 *db;

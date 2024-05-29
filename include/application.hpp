@@ -1,9 +1,10 @@
-#ifndef APPLICATION_HPP
-#define APPLICATION_HPP
+#ifndef APPLICATION_H
+#define APPLICATION_H
 
 #include "menu.hpp"
 #include "books.hpp"
 #include "users.hpp"
+#include "employeers.hpp"
 
 class Application
 {
@@ -15,6 +16,7 @@ private:
     Menu *menu = new Menu();
     Books *books = new Books();
     Users *users = new Users();
+    Employeers *employeers = new Employeers();
     bool isLogged;
     int choice;
     int loggedChoice;
@@ -27,4 +29,4 @@ private:
     void handleUserRegistration();
 };
 
-#endif // APPLICATION_HPP
+#endif // APPLICATION_H
