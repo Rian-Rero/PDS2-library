@@ -88,6 +88,7 @@ void Application::handleLoggedInMenu()
         break;
     case 7:
         UserHistory();
+        handleLoggedInMenu();
         break;
     case 8:
         users->getAllUsers_();
