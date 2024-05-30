@@ -492,3 +492,46 @@ void Database::updateEmployeerPosition(int ID, const string position)
 
     sqlite3_finalize(stmt);
 }
+
+string Database::getUserType(const string &email)
+{
+    const char *sql_select_user = "SELECT Admin, Cargo FROM Usuarios WHERE Email = ?;";
+
+    sqlite3_stmt *stmt;
+    int rc = sqlite3_prepare_v2(db, sql_select_user, -1, &stmt, nullptr);
+    if (rc != SQLITE_OK)
+    {
+        cerr << "Erro ao preparar a consulta: " << sqlite3_errmsg(db) << endl;
+        sqlite3_finalize(stmt);
+        return "Erro";
+    }
+
+    sqlite3_bind_text(stmt, 1, email.c_str(), -1, SQLITE_STATIC);
+
+    if (sqlite3_step(stmt) == SQLITE_ROW)
+    {
+        int admin = sqlite3_column_int(stmt, 0);
+        const unsigned char *cargo = sqlite3_column_text(stmt, 1);
+
+        sqlite3_finalize(stmt);
+
+        if (admin == 1)
+        {
+            return "admin";
+        }
+        else if (cargo != nullptr)
+        {
+            return reinterpret_cast<const char *>(cargo);
+        }
+        else
+        {
+            return "normal";
+        }
+    }
+    else
+    {
+        cout << "Usuário não encontrado." << endl;
+        sqlite3_finalize(stmt);
+        return "Erro";
+    }
+}

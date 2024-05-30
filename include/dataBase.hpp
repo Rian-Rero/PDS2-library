@@ -27,6 +27,7 @@ public:
     void getUsers();
     void updateUser(int ID);
     int getUserByEmail(const string &email);
+    string getUserType(const string &email);
 
     // Employeers
 

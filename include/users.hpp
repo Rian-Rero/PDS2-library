@@ -25,6 +25,7 @@ public:
     string getName();
     string getEmail();
     int isAdmin();
+    string getUserType_(const string &email);
 
     // Setters
 

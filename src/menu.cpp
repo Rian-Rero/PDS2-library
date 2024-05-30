@@ -36,10 +36,25 @@ void Menu::displayLoggedInAdminMenu_(Users *user)
     cout << "Escolha uma opção: ";
 }
 
-void Menu::displayLoggedInMenu_()
+void Menu::displayLoggedInMenu_(Users *user)
 {
     cout << "==============================" << endl;
-    cout << "            Olá Usuário" << endl;
+    cout << "            Olá " << user->getName() << endl;
+    cout << "==============================" << endl;
+    cout << "1. Ver Lista de Livros" << endl;
+    cout << "2. Ver Lista de Livros Disponíveis" << endl;
+    cout << "3. Ver seus Livros Alugados" << endl;
+    cout << "4. Ver histórico de aluguéis" << endl;
+    cout << "5. Acesssar histórias de usuários" << endl;
+    cout << "6. Logout" << endl;
+    cout << "==============================" << endl;
+    cout << "Escolha uma opção: ";
+}
+
+void Menu::displayEmployeerLoggedInMenu(Users *users)
+{
+    cout << "==============================" << endl;
+    cout << "         Olá " << users->getName() << endl;
     cout << "==============================" << endl;
     cout << "1. Ver Lista de Livros" << endl;
     cout << "2. Ver Lista de Livros Disponíveis" << endl;
