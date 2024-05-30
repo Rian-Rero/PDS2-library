@@ -55,55 +55,139 @@ void Application::handleLogin()
 
 void Application::handleLoggedInMenu()
 {
-    menu->displayLoggedInAdminMenu_(users);
-    if (!(cin >> loggedChoice))
+    string position = users->getUserType_(users->getEmail());
+    if (position.compare("admin") == 0)
     {
-        cout << "Entrada inválida. Por favor, insira um número." << endl;
-        cin.clear();
-        cin.ignore(numeric_limits<streamsize>::max(), '\n');
-        loggedChoice = 0;
-    }
+        menu->displayLoggedInAdminMenu_(users);
+        if (!(cin >> loggedChoice))
+        {
+            cout << "Entrada inválida. Por favor, insira um número." << endl;
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            loggedChoice = 0;
+        }
 
-    switch (loggedChoice)
+        switch (loggedChoice)
+        {
+        case 1:
+            handleCreateBooks();
+            handleLoggedInMenu();
+            break;
+        case 2:
+            handleViewBooks();
+            handleLoggedInMenu();
+            break;
+        case 3:
+            books->getAvailableBooks_(false);
+            handleLoggedInMenu();
+            break;
+        case 4:
+            books->getAvailableBooks_(true);
+            handleLoggedInMenu();
+            break;
+        case 5:
+            // Adicione as operações necessárias para a opção 5
+            break;
+        case 6:
+            // Adicione as operações necessárias para a opção 6
+            break;
+        case 7:
+            UserHistory();
+            handleLoggedInMenu();
+            break;
+        case 8:
+            users->getAllUsers_();
+            users->updateUser_();
+            handleLoggedInMenu();
+            break;
+        case 9:
+            employeers->createEmployeer_();
+            break;
+        case 10:
+            cout << "Deslogando..." << endl;
+            isLogged = false;
+            break;
+        default:
+            cout << "Opção inválida. Por favor, escolha uma opção válida." << endl;
+            break;
+        }
+    }
+    else if (position.compare("normal") == 0)
     {
-    case 1:
-        handleCreateBooks();
-        break;
-    case 2:
-        handleViewBooks();
-        break;
-    case 3:
-        books->getAvailableBooks_(false);
-        handleLoggedInMenu();
-        break;
-    case 4:
-        books->getAvailableBooks_(true);
-        handleLoggedInMenu();
-        break;
-    case 5:
-        // Adicione as operações necessárias para a opção 5
-        break;
-    case 6:
-        // Adicione as operações necessárias para a opção 6
-        break;
-    case 7:
-        UserHistory();
-        handleLoggedInMenu();
-        break;
-    case 8:
-        users->getAllUsers_();
-        users->updateUser_();
-        break;
-    case 9:
-        employeers->createEmployeer_();
-        break;
-    case 10:
-        cout << "Deslogando..." << endl;
-        isLogged = false;
-        break;
-    default:
-        cout << "Opção inválida. Por favor, escolha uma opção válida." << endl;
-        break;
+        menu->displayLoggedInMenu_(users);
+        if (!(cin >> loggedChoice))
+        {
+            cout << "Entrada inválida. Por favor, insira um número." << endl;
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            loggedChoice = 0;
+        }
+        switch (loggedChoice)
+        {
+        case 1:
+            handleViewBooks();
+            break;
+        case 2:
+            books->getAvailableBooks_(false);
+            handleLoggedInMenu();
+            break;
+        case 3:
+            // Adicione as operações necessárias para a opção 3
+            break;
+        case 4:
+            // Adicione as operações necessárias para a opção 4
+            break;
+        case 5:
+            UserHistory();
+            handleLoggedInMenu();
+            break;
+        case 6:
+            cout << "Deslogando..." << endl;
+            isLogged = false;
+            break;
+        default:
+            cout << "Opção inválida. Por favor, escolha uma opção válida." << endl;
+            break;
+        }
+    }
+    else
+    {
+        menu->displayEmployeerLoggedInMenu(users);
+        if (!(cin >> loggedChoice))
+        {
+            cout << "Entrada inválida. Por favor, insira um número." << endl;
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            loggedChoice = 0;
+        }
+        switch (loggedChoice)
+        {
+        case 1:
+            handleViewBooks();
+            handleLoggedInMenu();
+            break;
+        case 2:
+            books->getAvailableBooks_(false);
+            handleLoggedInMenu();
+            break;
+        case 3:
+            // Adicione as operações necessárias para a opção 3
+            break;
+        case 4:
+            // Adicione as operações necessárias para a opção 4
+            break;
+        case 5:
+            UserHistory();
+            handleLoggedInMenu();
+            break;
+        case 6:
+            cout << "Deslogando..." << endl;
+            isLogged = false;
+            break;
+        default:
+            cout << "Opção inválida. Por favor, escolha uma opção válida." << endl;
+            break;
+        }
     }
 }
 

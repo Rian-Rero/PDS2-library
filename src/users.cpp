@@ -133,6 +133,14 @@ void Users::updateUser_()
     {
         cerr << "Erro ao tornar o usuário um administrador: " << e.what() << endl;
     }
-
     delete dataBase;
+}
+
+string Users::getUserType_(const string &email)
+{
+    DataBaseConfig dataBaseName;
+    Database *dataBase = new Database(dataBaseName.getDataBaseFileName());
+    string position = dataBase->getUserType(email);
+    delete dataBase;
+    return position;
 }

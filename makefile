@@ -37,6 +37,7 @@ $(EXEC): $(OBJS)
 # Regra de compilação final para o segundo executável
 $(DATABASE_EXEC): $(BUILD_DIR) $(DATABASE_DIR)/readDatabase.cpp
 	$(CXX) $(CXXFLAGS) -o $@ $(DATABASE_DIR)/readDatabase.cpp $(LIBS)
+	@echo "Executável gerado em $(DATABASE_EXEC)"
 
 # Regra para limpar arquivos compilados
 clean:
