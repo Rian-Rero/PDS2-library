@@ -31,6 +31,7 @@ void Menu::displayLoggedInAdminMenu_(Users *user)
     cout << "7. Acesssar histórias de usuários" << endl;
     cout << "8. Conceder permissão de administrador" << endl;
     cout << "9. Cadastrar um funcionário" << endl;
+    cout << "10. Alugar um Livro" << endl;
     cout << "10. Logout" << endl;
     cout << "==============================" << endl;
     cout << "Escolha uma opção: ";
@@ -46,7 +47,8 @@ void Menu::displayLoggedInMenu_(Users *user)
     cout << "3. Ver seus Livros Alugados" << endl;
     cout << "4. Ver histórico de aluguéis" << endl;
     cout << "5. Acesssar histórias de usuários" << endl;
-    cout << "6. Logout" << endl;
+    cout << "6. Alugar um Livro" << endl;
+    cout << "7. Logout" << endl;
     cout << "==============================" << endl;
     cout << "Escolha uma opção: ";
 }

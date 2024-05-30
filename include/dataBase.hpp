@@ -19,6 +19,10 @@ public:
     void getBook(const string &name);
     void getBookByAuthor(const string &author);
     void getAvailableBooks(bool borrowed);
+    void rentBook(int bookID, int userID);
+    void returnBook(int bookID, int userID);
+    void getBorrowedHistory(int userID);
+    void getCurrentBorrowedBooks(int userID);
 
     // Users
 
@@ -28,6 +32,7 @@ public:
     void updateUser(int ID);
     int getUserByEmail(const string &email);
     string getUserType(const string &email);
+    int getID(const string email);
 
     // Employeers
 

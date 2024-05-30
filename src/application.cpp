@@ -6,6 +6,7 @@
 using namespace std;
 
 Application::Application() : isLogged(false), choice(0), loggedChoice(0) {}
+Application::~Application() {}
 
 void Application::run()
 {
@@ -86,10 +87,12 @@ void Application::handleLoggedInMenu()
             handleLoggedInMenu();
             break;
         case 5:
-            // Adicione as operações necessárias para a opção 5
+            bookStatus->getCurrentBorrowedBooks_(users->getID_(users->getEmail()));
+            handleLoggedInMenu();
             break;
         case 6:
-            // Adicione as operações necessárias para a opção 6
+            bookStatus->getBorrowedHistory_(users->getID_(users->getEmail()));
+            handleLoggedInMenu();
             break;
         case 7:
             UserHistory();
@@ -132,10 +135,11 @@ void Application::handleLoggedInMenu()
             handleLoggedInMenu();
             break;
         case 3:
-            // Adicione as operações necessárias para a opção 3
+            bookStatus->getCurrentBorrowedBooks_(users->getID_(users->getEmail()));
+            handleLoggedInMenu();
             break;
         case 4:
-            // Adicione as operações necessárias para a opção 4
+            bookStatus->getBorrowedHistory_(users->getID_(users->getEmail()));
             break;
         case 5:
             UserHistory();
@@ -171,10 +175,12 @@ void Application::handleLoggedInMenu()
             handleLoggedInMenu();
             break;
         case 3:
-            // Adicione as operações necessárias para a opção 3
+            bookStatus->getCurrentBorrowedBooks_(users->getID_(users->getEmail()));
+            handleLoggedInMenu();
             break;
         case 4:
-            // Adicione as operações necessárias para a opção 4
+            bookStatus->getBorrowedHistory_(users->getID_(users->getEmail()));
+            handleLoggedInMenu();
             break;
         case 5:
             UserHistory();
