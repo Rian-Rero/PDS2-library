@@ -6,6 +6,7 @@ using namespace std;
 
 static int callback(void *data, int argc, char **argv, char **azColName)
 {
+    (void)data; // Parâmetro não utilizado
     int i;
     cout << "Lendo dados..." << endl;
 
@@ -36,11 +37,13 @@ static int callback(void *data, int argc, char **argv, char **azColName)
 
 int main(int argc, char *argv[])
 {
+    (void)argc; // Parâmetro não utilizado
+    (void)argv; // Parâmetro não utilizado
+
     sqlite3 *db;
     char *zErrMsg = 0;
     int rc;
 
-    // Convert std::string to const char*
     rc = sqlite3_open("./database/LibraryDevelopmentDB3000.db", &db);
 
     if (rc)
