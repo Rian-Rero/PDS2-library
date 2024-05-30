@@ -144,3 +144,12 @@ string Users::getUserType_(const string &email)
     delete dataBase;
     return position;
 }
+
+int Users::getID_(string email)
+{
+    DataBaseConfig dataBaseName;
+    Database *dataBase = new Database(dataBaseName.getDataBaseFileName());
+    int ID = dataBase->getID(email.c_str());
+    delete dataBase;
+    return ID;
+}

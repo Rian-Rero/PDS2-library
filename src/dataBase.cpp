@@ -58,6 +58,45 @@ Database::Database(const string &filename)
         cerr << "Erro ao criar a tabela Usuarios: " << sqlite3_errmsg(db) << endl;
         throw runtime_error("Erro ao criar a tabela Usuarios");
     }
+
+    // Criação da tabaela de histórico de livros emprestados
+
+    const char *sql_create_table_historico_emprestimos =
+        "CREATE TABLE IF NOT EXISTS HistoricoEmprestimos ("
+        "ID INTEGER PRIMARY KEY AUTOINCREMENT,"
+        "UsuarioID INTEGER NOT NULL,"
+        "LivroID INTEGER NOT NULL,"
+        "DataEmprestimo TEXT NOT NULL,"
+        "DataDevolucao TEXT,"
+        "FOREIGN KEY(UsuarioID) REFERENCES Usuarios(ID),"
+        "FOREIGN KEY(LivroID) REFERENCES Livros(ID)"
+        ");";
+
+    rc = sqlite3_exec(db, sql_create_table_historico_emprestimos, nullptr, nullptr, nullptr);
+    if (rc != SQLITE_OK)
+    {
+        cerr << "Erro ao criar a tabela HistoricoEmprestimos: " << sqlite3_errmsg(db) << endl;
+        throw runtime_error("Erro ao criar a tabela HistoricoEmprestimos");
+    }
+
+    // Criação da tabela de livros alugados
+
+    const char *sql_create_table_livros_alugados =
+        "CREATE TABLE IF NOT EXISTS LivrosAlugados ("
+        "ID INTEGER PRIMARY KEY AUTOINCREMENT,"
+        "UsuarioID INTEGER NOT NULL,"
+        "LivroID INTEGER NOT NULL,"
+        "DataEmprestimo TEXT NOT NULL,"
+        "FOREIGN KEY(UsuarioID) REFERENCES Usuarios(ID),"
+        "FOREIGN KEY(LivroID) REFERENCES Livros(ID)"
+        ");";
+
+    rc = sqlite3_exec(db, sql_create_table_livros_alugados, nullptr, nullptr, nullptr);
+    if (rc != SQLITE_OK)
+    {
+        cerr << "Erro ao criar a tabela LivrosAlugados: " << sqlite3_errmsg(db) << endl;
+        throw runtime_error("Erro ao criar a tabela LivrosAlugados");
+    }
 }
 
 // Destructor
@@ -256,6 +295,189 @@ void Database::getAvailableBooks(bool borrowed)
     }
 }
 
+void Database::rentBook(int bookID, int userID)
+{
+    // Atualizar o status do livro para emprestado na tabela Livros
+    const char *sql_update = "UPDATE Livros SET Emprestado = 1 WHERE ID = ?;";
+
+    sqlite3_stmt *stmt;
+    int rc = sqlite3_prepare_v2(db, sql_update, -1, &stmt, nullptr);
+    if (rc != SQLITE_OK)
+    {
+        cerr << "Erro ao preparar a consulta: " << sqlite3_errmsg(db) << endl;
+        return;
+    }
+
+    sqlite3_bind_int(stmt, 1, bookID);
+
+    rc = sqlite3_step(stmt);
+    if (rc != SQLITE_DONE)
+    {
+        cerr << "Erro ao atualizar o livro: " << sqlite3_errmsg(db) << endl;
+        sqlite3_finalize(stmt);
+        return;
+    }
+    sqlite3_finalize(stmt);
+
+    // Inserir o empréstimo na tabela HistoricoEmprestimos
+    const char *sql_insert_historico =
+        "INSERT INTO HistoricoEmprestimos (UsuarioID, LivroID, DataEmprestimo) VALUES (?, ?, datetime('now'));";
+
+    rc = sqlite3_prepare_v2(db, sql_insert_historico, -1, &stmt, nullptr);
+    if (rc != SQLITE_OK)
+    {
+        cerr << "Erro ao preparar a consulta de histórico: " << sqlite3_errmsg(db) << endl;
+        return;
+    }
+
+    sqlite3_bind_int(stmt, 1, userID);
+    sqlite3_bind_int(stmt, 2, bookID);
+
+    rc = sqlite3_step(stmt);
+    if (rc != SQLITE_DONE)
+    {
+        cerr << "Erro ao registrar no histórico de empréstimos: " << sqlite3_errmsg(db) << endl;
+    }
+    sqlite3_finalize(stmt);
+
+    // Inserir o empréstimo na tabela LivrosAlugados
+    const char *sql_insert_alugados =
+        "INSERT INTO LivrosAlugados (UsuarioID, LivroID, DataEmprestimo) VALUES (?, ?, datetime('now'));";
+
+    rc = sqlite3_prepare_v2(db, sql_insert_alugados, -1, &stmt, nullptr);
+    if (rc != SQLITE_OK)
+    {
+        cerr << "Erro ao preparar a consulta de livros alugados: " << sqlite3_errmsg(db) << endl;
+        return;
+    }
+
+    sqlite3_bind_int(stmt, 1, userID);
+    sqlite3_bind_int(stmt, 2, bookID);
+
+    rc = sqlite3_step(stmt);
+    if (rc != SQLITE_DONE)
+    {
+        cerr << "Erro ao registrar no livros alugados: " << sqlite3_errmsg(db) << endl;
+    }
+    sqlite3_finalize(stmt);
+
+    cout << "Livro emprestado com sucesso!" << endl;
+}
+
+void Database::returnBook(int BookID, int userID)
+{
+    const char *sql_update = "UPDATE Livros SET Emprestado = 0 WHERE ID = ?;";
+
+    sqlite3_stmt *stmt;
+    int rc = sqlite3_prepare_v2(db, sql_update, -1, &stmt, nullptr);
+    if (rc != SQLITE_OK)
+    {
+        cerr << "Erro ao preparar a consulta: " << sqlite3_errmsg(db) << endl;
+        return;
+    }
+
+    sqlite3_bind_int(stmt, 1, BookID);
+
+    rc = sqlite3_step(stmt);
+    if (rc != SQLITE_DONE)
+    {
+        cerr << "Erro ao atualizar o livro: " << sqlite3_errmsg(db) << endl;
+        sqlite3_finalize(stmt);
+        return;
+    }
+    sqlite3_finalize(stmt);
+
+    // Atualizar a data de devolução na tabela HistoricoEmprestimos
+    const char *sql_update_historico = "UPDATE HistoricoEmprestimos SET DataDevolucao = datetime('now') WHERE LivroID = ? AND UsuarioID = ? AND DataDevolucao IS NULL;";
+
+    rc = sqlite3_prepare_v2(db, sql_update_historico, -1, &stmt, nullptr);
+    if (rc != SQLITE_OK)
+    {
+        cerr << "Erro ao preparar a consulta de histórico: " << sqlite3_errmsg(db) << endl;
+        return;
+    }
+
+    sqlite3_bind_int(stmt, 1, BookID);
+    sqlite3_bind_int(stmt, 2, userID);
+
+    rc = sqlite3_step(stmt);
+    if (rc != SQLITE_DONE)
+    {
+        cerr << "Erro ao registrar a devolução no histórico de empréstimos: " << sqlite3_errmsg(db) << endl;
+    }
+    sqlite3_finalize(stmt);
+
+    // Remover o livro da tabela LivrosAlugados
+    const char *sql_delete_alugados = "DELETE FROM LivrosAlugados WHERE LivroID = ? AND UsuarioID = ?;";
+
+    rc = sqlite3_prepare_v2(db, sql_delete_alugados, -1, &stmt, nullptr);
+    if (rc != SQLITE_OK)
+    {
+        cerr << "Erro ao preparar a consulta de livros alugados: " << sqlite3_errmsg(db) << endl;
+        return;
+    }
+
+    sqlite3_bind_int(stmt, 1, BookID);
+}
+
+void Database::getBorrowedHistory(int userID)
+{
+    const char *sql_select_history = "SELECT * FROM HistoricoEmprestimos WHERE UsuarioID = ?;";
+
+    sqlite3_stmt *stmt;
+    int rc = sqlite3_prepare_v2(db, sql_select_history, -1, &stmt, nullptr);
+    if (rc != SQLITE_OK)
+    {
+        cerr << "Erro ao preparar a consulta: " << sqlite3_errmsg(db) << endl;
+        return;
+    }
+
+    sqlite3_bind_int(stmt, 1, userID);
+
+    cout << "Histórico de empréstimos:\n";
+
+    while ((rc = sqlite3_step(stmt)) == SQLITE_ROW)
+    {
+        int id = sqlite3_column_int(stmt, 0);
+        int bookID = sqlite3_column_int(stmt, 2);
+        const unsigned char *dateBorrowed = sqlite3_column_text(stmt, 3);
+        const unsigned char *dateReturned = sqlite3_column_text(stmt, 4);
+
+        cout << "ID: " << id << ", LivroID: " << bookID << ", Data de Empréstimo: " << dateBorrowed
+             << ", Data de Devolução: " << (dateReturned ? (const char *)dateReturned : "Ainda não devolvido") << endl;
+    }
+
+    sqlite3_finalize(stmt);
+}
+
+void Database::getCurrentBorrowedBooks(int userID)
+{
+    const char *sql_select_books = "SELECT * FROM LivrosAlugados WHERE UsuarioID = ?;";
+
+    sqlite3_stmt *stmt;
+    int rc = sqlite3_prepare_v2(db, sql_select_books, -1, &stmt, nullptr);
+    if (rc != SQLITE_OK)
+    {
+        cerr << "Erro ao preparar a consulta: " << sqlite3_errmsg(db) << endl;
+        return;
+    }
+
+    sqlite3_bind_int(stmt, 1, userID);
+
+    cout << "Livros atualmente alugados:\n";
+
+    while ((rc = sqlite3_step(stmt)) == SQLITE_ROW)
+    {
+        int id = sqlite3_column_int(stmt, 0);
+        int bookID = sqlite3_column_int(stmt, 2);
+        const unsigned char *dateBorrowed = sqlite3_column_text(stmt, 3);
+
+        cout << "ID: " << id << ", LivroID: " << bookID << ", Data de Empréstimo: " << dateBorrowed << endl;
+    }
+
+    sqlite3_finalize(stmt);
+}
+
 // Users
 
 void Database::createUser(const string &nome, const string &email, const string &senha)
@@ -441,6 +663,35 @@ bool Database::login(const string &email, const string &senha, Users *users)
 int Database::getUserByEmail(const string &email)
 {
     const char *sql_select_user = "SELECT * FROM Usuarios WHERE Email = ?;";
+
+    sqlite3_stmt *stmt;
+    int rc = sqlite3_prepare_v2(db, sql_select_user, -1, &stmt, nullptr);
+    if (rc != SQLITE_OK)
+    {
+        cerr << "Erro ao preparar a consulta: " << sqlite3_errmsg(db) << endl;
+        sqlite3_finalize(stmt);
+        return -1;
+    }
+
+    sqlite3_bind_text(stmt, 1, email.c_str(), -1, SQLITE_STATIC);
+
+    if (sqlite3_step(stmt) == SQLITE_ROW)
+    {
+        int id = sqlite3_column_int(stmt, 0);
+        sqlite3_finalize(stmt);
+        return id;
+    }
+    else
+    {
+        cout << "Usuário não encontrado." << endl;
+        sqlite3_finalize(stmt);
+        return -1;
+    }
+}
+
+int Database::getID(const string email)
+{
+    const char *sql_select_user = "SELECT ID FROM Usuarios WHERE Email = ?;";
 
     sqlite3_stmt *stmt;
     int rc = sqlite3_prepare_v2(db, sql_select_user, -1, &stmt, nullptr);

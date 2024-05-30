@@ -5,18 +5,21 @@
 #include "books.hpp"
 #include "users.hpp"
 #include "employeers.hpp"
+#include "bookStatus.hpp"
 
 class Application
 {
 public:
     Application();
     void run();
+    ~Application();
 
 private:
     Menu *menu = new Menu();
     Books *books = new Books();
     Users *users = new Users();
     Employeers *employeers = new Employeers();
+    BookStatus *bookStatus = new BookStatus();
     bool isLogged;
     int choice;
     int loggedChoice;
