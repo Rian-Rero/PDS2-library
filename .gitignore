@@ -47,4 +47,5 @@ _.out
 # build files
 
 build/
+bin/
 
