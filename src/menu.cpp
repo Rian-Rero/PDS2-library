@@ -11,15 +11,33 @@ void printBoxedText(const string &text)
 
     cout << border << endl;
     cout << "║ " << text;
-    for (size_t i = text.size(); i < 38; ++i)
-        cout << " ";
+    if (text.size() < 39)
+    {
+        for (size_t i = text.size(); i < 39; ++i)
+            cout << " ";
+    }
     cout << " ║" << endl;
     cout << "╚════════════════════════════════════════╝" << endl;
 }
 
+void printBoxedText2(const string &text)
+{
+    string border = "╔════════════════════════════════════════╗";
+    string padding = "║                                        ║";
+
+    cout << border << endl;
+    cout << "║ " << text;
+    if (text.size() < 38)
+    {
+        for (size_t i = text.size(); i < 38; ++i)
+            cout << " ";
+    }
+    cout << " ║" << endl;
+    cout << "╚════════════════════════════════════════╝" << endl;
+}
 void Menu::displayMainMenu_()
 {
-    printBoxedText("Seja Bem-Vindo ao LibrarySoftware");
+    printBoxedText2("Seja Bem-Vindo ao LibrarySoftware!");
     cout << "╔════════════════════════════════════════╗" << endl;
     cout << "║ 1. Login                               ║" << endl;
     cout << "║ 2. Registrar                           ║" << endl;
@@ -88,7 +106,7 @@ void Menu::registerUser_()
 
 void Menu::createBooks_()
 {
-    printBoxedText("Cadastro de Livro");
+    printBoxedText2("Cadastro de Livro");
 }
 
 void Menu::closeSoftware_()
@@ -99,7 +117,7 @@ void Menu::closeSoftware_()
 
 void Menu::displayAllBooks_()
 {
-    printBoxedText("Pesquisar Livros");
+    printBoxedText2("Pesquisar Livros");
     cout << "╔════════════════════════════════════════╗" << endl;
     cout << "║ 1. Pesquisar por nome                  ║" << endl;
     cout << "║ 2. Pesquisar por autor                 ║" << endl;
