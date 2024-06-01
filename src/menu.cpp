@@ -111,7 +111,7 @@ void Menu::createBooks_()
 
 void Menu::closeSoftware_()
 {
-    printBoxedText("Saindo do software");
+    printBoxedText2("Saindo do software");
     exit(0);
 }
 
@@ -122,6 +122,29 @@ void Menu::displayAllBooks_()
     cout << "║ 1. Pesquisar por nome                  ║" << endl;
     cout << "║ 2. Pesquisar por autor                 ║" << endl;
     cout << "║ 3. Voltar                              ║" << endl;
+    cout << "╚════════════════════════════════════════╝" << endl;
+    cout << "Escolha uma opção: ";
+}
+
+void Menu::displayAudioBooksMenu_()
+{
+    printBoxedText("Sessão Audio Livros");
+    cout << "╔════════════════════════════════════════╗" << endl;
+    cout << "║ 1. Pesquisar por nome                  ║" << endl;
+    cout << "║ 2. Pesquisar por autor                 ║" << endl;
+    cout << "║ 3. Voltar                              ║" << endl;
+    cout << "╚════════════════════════════════════════╝" << endl;
+    cout << "Escolha uma opção: ";
+}
+
+void Menu::displayAdminAudioBooksMenu_()
+{
+    printBoxedText("Sessão Audio Livros");
+    cout << "╔════════════════════════════════════════╗" << endl;
+    cout << "║ 1. Pesquisar por nome                  ║" << endl;
+    cout << "║ 2. Pesquisar por autor                 ║" << endl;
+    cout << "║ 3. Adicionar um novo AudioBook            ║" << endl;
+    cout << "║ 4. Voltar                              ║" << endl;
     cout << "╚════════════════════════════════════════╝" << endl;
     cout << "Escolha uma opção: ";
 }

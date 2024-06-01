@@ -17,6 +17,7 @@ public:
     void closeSoftware_();
     void displayAllBooks_();
     void HistoriasUsuarios_();
+    void displayAudioBooksMenu_();
 };
 
 #endif // MENU_H

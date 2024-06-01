@@ -38,6 +38,12 @@ public:
 
     void updateEmployeerPosition(int ID, const string position);
 
+    // Multimedia
+
+    void addMultimedia(int bookID);
+    void getMultimedia();
+    void getMultimediaByName(const string &name);
+
 private:
     sqlite3 *db;
 };

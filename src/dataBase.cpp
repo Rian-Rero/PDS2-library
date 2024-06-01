@@ -31,7 +31,8 @@ Database::Database(const string &filename)
         "Titulo TEXT NOT NULL,"
         "Autor TEXT NOT NULL,"
         "Emprestado INTEGER NOT NULL,"
-        "DataCadastro TEXT NOT NULL"
+        "DataCadastro TEXT NOT NULL,"
+        "Multimedia INTEGER NOT NULL DEFAULT 0"
         ");";
 
     rc = sqlite3_exec(db, sql_create_table_livros, nullptr, nullptr, nullptr);
@@ -784,5 +785,108 @@ string Database::getUserType(const string &email)
         cout << "Usuário não encontrado." << endl;
         sqlite3_finalize(stmt);
         return "Erro";
+    }
+}
+
+// Multimedia
+
+void Database::addMultimedia(int bookID)
+{
+    const char *sql_update = "UPDATE Livros SET Multimedia = 1 WHERE ID = ?;";
+
+    sqlite3_stmt *stmt;
+    int rc = sqlite3_prepare_v2(db, sql_update, -1, &stmt, nullptr);
+    if (rc != SQLITE_OK)
+    {
+        cerr << "Erro ao preparar a consulta: " << sqlite3_errmsg(db) << endl;
+        return;
+    }
+
+    sqlite3_bind_int(stmt, 1, bookID);
+
+    rc = sqlite3_step(stmt);
+    if (rc != SQLITE_DONE)
+    {
+        cerr << "Erro ao atualizar o livro: " << sqlite3_errmsg(db) << endl;
+    }
+    else
+    {
+        cout << "Livro atualizado com sucesso!" << endl;
+    }
+
+    sqlite3_finalize(stmt);
+}
+
+void Database::getMultimedia()
+{
+    const char *sql_select_multimedia = "SELECT * FROM Livros WHERE Multimedia = 1;";
+
+    sqlite3_stmt *stmt;
+    int rc = sqlite3_prepare_v2(db, sql_select_multimedia, -1, &stmt, nullptr);
+    if (rc != SQLITE_OK)
+    {
+        cerr << "Erro ao preparar a consulta: " << sqlite3_errmsg(db) << endl;
+        return;
+    }
+
+    cout << "Livros com multimídia:\n";
+
+    while ((rc = sqlite3_step(stmt)) == SQLITE_ROW)
+    {
+        int id = sqlite3_column_int(stmt, 0);
+        const unsigned char *title = sqlite3_column_text(stmt, 1);
+        const unsigned char *author = sqlite3_column_text(stmt, 2);
+        int borrowed = sqlite3_column_int(stmt, 3);
+        const unsigned char *date = sqlite3_column_text(stmt, 4);
+
+        cout << "ID: " << id << ", Título: " << title << ", Autor: " << author
+             << ", Emprestado: " << (borrowed ? "Sim" : "Não") << ", Data de Cadastro: " << date << endl;
+    }
+
+    sqlite3_finalize(stmt);
+}
+
+void Database::getMultimediaByName(const string &name)
+{
+    if (name.empty())
+    {
+        cerr << "Erro: Nome do livro vazio." << endl;
+        return;
+    }
+
+    const char *sql_select_multimedia = "SELECT * FROM Livros WHERE Titulo LIKE ? AND Multimedia = 1;";
+
+    sqlite3_stmt *stmt;
+    int rc = sqlite3_prepare_v2(db, sql_select_multimedia, -1, &stmt, nullptr);
+    if (rc != SQLITE_OK)
+    {
+        cerr << "Erro ao preparar a consulta: " << sqlite3_errmsg(db) << endl;
+        return;
+    }
+
+    // String de busca com curingas para filtrar parte do título
+    string searchName = "%" + name + "%";
+    sqlite3_bind_text(stmt, 1, searchName.c_str(), -1, SQLITE_STATIC);
+
+    bool found = false;
+
+    while ((rc = sqlite3_step(stmt)) == SQLITE_ROW)
+    {
+        found = true;
+        int id = sqlite3_column_int(stmt, 0);
+        const unsigned char *title = sqlite3_column_text(stmt, 1);
+        const unsigned char *author = sqlite3_column_text(stmt, 2);
+        int borrowed = sqlite3_column_int(stmt, 3);
+        const unsigned char *date = sqlite3_column_text(stmt, 4);
+
+        cout << "ID: " << id << ", Título: " << title << ", Autor: " << author
+             << ", Emprestado: " << (borrowed ? "Sim" : "Não") << ", Data de Cadastro: " << date << endl;
+    }
+
+    sqlite3_finalize(stmt);
+
+    if (!found)
+    {
+        cout << "Nenhum livro encontrado com o título contendo '" << name << "'." << endl;
     }
 }

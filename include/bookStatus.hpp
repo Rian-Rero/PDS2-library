@@ -1,7 +1,9 @@
 #ifndef BOOKSTATUS_H
 #define BOOKSTATUS_H
 
-class BookStatus
+#include "books.hpp"
+
+class BookStatus : public Books
 {
 
 public:
