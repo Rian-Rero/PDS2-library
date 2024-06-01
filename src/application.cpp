@@ -112,6 +112,10 @@ void Application::handleLoggedInMenu()
             handleLoggedInMenu();
             break;
         case 11:
+            audioBook->getAudioBook_();
+            menu->displayAdminAudioBooksMenu_();
+            break;
+        case 12:
             cout << "Deslogando..." << endl;
             isLogged = false;
             break;
@@ -155,7 +159,11 @@ void Application::handleLoggedInMenu()
             bookStatus->rentBook_(users->getID_(users->getEmail()));
             handleLoggedInMenu();
             break;
-        case 7:
+         case 7:
+            audioBook->getAudioBook_();
+            menu->displayAdminAudioBooksMenu_();
+            break;
+        case 8:
             cout << "Deslogando..." << endl;
             isLogged = false;
             break;
@@ -197,6 +205,10 @@ void Application::handleLoggedInMenu()
             handleLoggedInMenu();
             break;
         case 6:
+            audioBook->getAudioBook_();
+            menu->displayAdminAudioBooksMenu_();
+            break;
+        case 7:
             cout << "Deslogando..." << endl;
             isLogged = false;
             break;
@@ -250,4 +262,43 @@ void Application::handleUserRegistration()
 {
     menu->registerUser_();
     users->createUser_();
+}
+
+void Application::handleAudioBook()
+{
+    while(audioBookChoice != 3){
+    menu->displayAudioBooksMenu_();
+    switch(audioBookChoice){
+        case 1:
+        audioBook->getAudioBookByName_();
+        break;
+        case 2:
+        audioBook->getAudioBookByAuthor_();
+        break;
+        case 3:
+        handleLoggedInMenu();
+        break;
+        }
+    }
+}
+
+void Application::handleAdminAudioBook()
+{
+    while(audioBookChoice != 4){
+    menu->displayAudioBooksMenu_();
+    switch(audioBookChoice){
+        case 1:
+        audioBook->getAudioBookByName_();
+        break;
+        case 2:
+        audioBook->getAudioBookByAuthor_();
+        break;
+        case 3:
+        audioBook->addAudioBook_();
+        break;
+        case 4:
+        handleLoggedInMenu();
+        break;
+        }
+    }
 }

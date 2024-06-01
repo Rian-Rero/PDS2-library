@@ -60,7 +60,8 @@ void Menu::displayLoggedInAdminMenu_(Users *user)
     cout << "║ 8. Conceder permissão de administrador ║" << endl;
     cout << "║ 9. Cadastrar um funcionário            ║" << endl;
     cout << "║ 10. Alugar um Livro                    ║" << endl;
-    cout << "║ 11. Logout                             ║" << endl;
+    cout << "║ 11. Acessar Audio Books                ║" << endl;
+    cout << "║ 12. Logout                             ║" << endl;
     cout << "╚════════════════════════════════════════╝" << endl;
     cout << "Escolha uma opção: ";
 }
@@ -75,7 +76,8 @@ void Menu::displayLoggedInMenu_(Users *user)
     cout << "║ 4. Ver histórico de aluguéis           ║" << endl;
     cout << "║ 5. Acessar histórias de usuários       ║" << endl;
     cout << "║ 6. Alugar um Livro                     ║" << endl;
-    cout << "║ 7. Logout                              ║" << endl;
+    cout << "║ 7. Acessar Audio Books                 ║" << endl;
+    cout << "║ 8. Logout                              ║" << endl;
     cout << "╚════════════════════════════════════════╝" << endl;
     cout << "Escolha uma opção: ";
 }
@@ -89,7 +91,8 @@ void Menu::displayEmployeerLoggedInMenu(Users *users)
     cout << "║ 3. Ver seus Livros Alugados            ║" << endl;
     cout << "║ 4. Ver histórico de aluguéis           ║" << endl;
     cout << "║ 5. Acessar histórias de usuários       ║" << endl;
-    cout << "║ 6. Logout                              ║" << endl;
+    cout << "║ 6. Acessar Audio Books                 ║" << endl;
+    cout << "║ 7. Logout                              ║" << endl;
     cout << "╚════════════════════════════════════════╝" << endl;
     cout << "Escolha uma opção: ";
 }
@@ -118,6 +121,29 @@ void Menu::closeSoftware_()
 void Menu::displayAllBooks_()
 {
     printBoxedText2("Pesquisar Livros");
+    cout << "╔════════════════════════════════════════╗" << endl;
+    cout << "║ 1. Pesquisar por nome                  ║" << endl;
+    cout << "║ 2. Pesquisar por autor                 ║" << endl;
+    cout << "║ 3. Voltar                              ║" << endl;
+    cout << "╚════════════════════════════════════════╝" << endl;
+    cout << "Escolha uma opção: ";
+}
+
+void Menu::displayAdminAudioBooksMenu_()
+{
+    printBoxedText("Sessão Audio Livros");
+    cout << "╔════════════════════════════════════════╗" << endl;
+    cout << "║ 1. Pesquisar por nome                  ║" << endl;
+    cout << "║ 2. Pesquisar por autor                 ║" << endl;
+    cout << "║ 3. Adicionar novo Audio Book           ║" << endl;
+    cout << "║ 4. Voltar                              ║" << endl;
+    cout << "╚════════════════════════════════════════╝" << endl;
+    cout << "Escolha uma opção: ";
+}
+
+void Menu::displayAudioBooksMenu_()
+{
+    printBoxedText("Sessão Audio Livros");
     cout << "╔════════════════════════════════════════╗" << endl;
     cout << "║ 1. Pesquisar por nome                  ║" << endl;
     cout << "║ 2. Pesquisar por autor                 ║" << endl;

@@ -38,6 +38,13 @@ public:
 
     void updateEmployeerPosition(int ID, const string position);
 
+    // AudioBook
+
+    void addAudioBook(int bookID);
+    void getAudioBook();
+    void getAudioBookByName(const string &bookName);
+    void getAudioBookByAuthor(const string &bookAuthor);
+
 private:
     sqlite3 *db;
 };

@@ -6,6 +6,7 @@
 #include "users.hpp"
 #include "employeers.hpp"
 #include "bookStatus.hpp"
+#include "audioBook.hpp"
 
 class Application
 {
@@ -20,9 +21,11 @@ private:
     Users *users = new Users();
     Employeers *employeers = new Employeers();
     BookStatus *bookStatus = new BookStatus();
+    AudioBook *audioBook = new AudioBook();
     bool isLogged;
     int choice;
     int loggedChoice;
+    int audioBookChoice;
 
     void displayMainMenu();
     void handleLogin();
@@ -30,6 +33,8 @@ private:
     void handleCreateBooks();
     void handleViewBooks();
     void handleUserRegistration();
+    void handleAudioBook();
+    void handleAdminAudioBook();
 };
 
 #endif // APPLICATION_H

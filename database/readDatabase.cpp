@@ -44,7 +44,7 @@ int main(int argc, char *argv[])
     char *zErrMsg = 0;
     int rc;
 
-    rc = sqlite3_open("./database/LibraryDevelopmentDB.db", &db);
+    rc = sqlite3_open("./database/LibraryDevelopmentDB3.db", &db);
 
     if (rc)
     {
