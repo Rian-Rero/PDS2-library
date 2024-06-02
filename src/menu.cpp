@@ -114,7 +114,7 @@ void Menu::createBooks_()
 
 void Menu::closeSoftware_()
 {
-    printBoxedText("Saindo do software");
+    printBoxedText2("Saindo do software");
     exit(0);
 }
 
