@@ -113,7 +113,7 @@ void Application::handleLoggedInMenu()
             break;
         case 11:
             audioBook->getAudioBook_();
-            menu->displayAdminAudioBooksMenu_();
+            handleAdminAudioBook();
             break;
         case 12:
             cout << "Deslogando..." << endl;
@@ -159,9 +159,9 @@ void Application::handleLoggedInMenu()
             bookStatus->rentBook_(users->getID_(users->getEmail()));
             handleLoggedInMenu();
             break;
-         case 7:
+        case 7:
             audioBook->getAudioBook_();
-            menu->displayAdminAudioBooksMenu_();
+            handleAudioBook();
             break;
         case 8:
             cout << "Deslogando..." << endl;
@@ -206,7 +206,8 @@ void Application::handleLoggedInMenu()
             break;
         case 6:
             audioBook->getAudioBook_();
-            menu->displayAdminAudioBooksMenu_();
+            handleAdminAudioBook();
+
             break;
         case 7:
             cout << "Deslogando..." << endl;
@@ -266,39 +267,63 @@ void Application::handleUserRegistration()
 
 void Application::handleAudioBook()
 {
-    while(audioBookChoice != 3){
-    menu->displayAudioBooksMenu_();
-    switch(audioBookChoice){
-        case 1:
-        audioBook->getAudioBookByName_();
-        break;
-        case 2:
-        audioBook->getAudioBookByAuthor_();
-        break;
-        case 3:
-        handleLoggedInMenu();
-        break;
+    do
+    {
+        menu->displayAudioBooksMenu_();
+        if (!(cin >> audioBookChoice))
+        {
+            cout << "Entrada inválida. Por favor, insira um número." << endl;
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            audioBookChoice = 0;
         }
-    }
+        switch (audioBookChoice)
+        {
+        case 1:
+            audioBook->getAudioBookByName_();
+            break;
+        case 2:
+            audioBook->getAudioBookByAuthor_();
+            break;
+        case 3:
+            handleLoggedInMenu();
+            break;
+        default:
+            cout << "Opção inválida. Por favor, escolha uma opção válida." << endl;
+            break;
+        }
+    } while (audioBookChoice != 3);
 }
 
 void Application::handleAdminAudioBook()
 {
-    while(audioBookChoice != 4){
-    menu->displayAudioBooksMenu_();
-    switch(audioBookChoice){
-        case 1:
-        audioBook->getAudioBookByName_();
-        break;
-        case 2:
-        audioBook->getAudioBookByAuthor_();
-        break;
-        case 3:
-        audioBook->addAudioBook_();
-        break;
-        case 4:
-        handleLoggedInMenu();
-        break;
+    do
+    {
+        menu->displayAdminAudioBooksMenu_();
+        if (!(cin >> audioBookChoice))
+        {
+            cout << "Entrada inválida. Por favor, insira um número." << endl;
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            audioBookChoice = 0;
         }
-    }
+        switch (audioBookChoice)
+        {
+        case 1:
+            audioBook->getAudioBookByName_();
+            break;
+        case 2:
+            audioBook->getAudioBookByAuthor_();
+            break;
+        case 3:
+            audioBook->addAudioBook_();
+            break;
+        case 4:
+            handleLoggedInMenu();
+            break;
+        default:
+            cout << "Opção inválida. Por favor, escolha uma opção válida." << endl;
+            break;
+        }
+    } while (audioBookChoice != 4);
 }

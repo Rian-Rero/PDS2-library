@@ -788,55 +788,63 @@ string Database::getUserType(const string &email)
     }
 }
 
-void Database::addAudioBook(int bookID){
+void Database::addAudioBook(int bookID)
+{
     const char *sql_update = "UPDATE Livros SET AudioBook = 1 WHERE ID = ?;";
     sqlite3_stmt *stmt;
     int rc = sqlite3_prepare_v2(db, sql_update, -1, &stmt, nullptr);
-    if(rc != SQLITE_OK){
-        cerr<<"Erro ao preparar consulta: "<<sqlite3_errmsg(db)<<endl;
+    if (rc != SQLITE_OK)
+    {
+        cerr << "Erro ao preparar consulta: " << sqlite3_errmsg(db) << endl;
         return;
     }
     sqlite3_bind_int(stmt, 1, bookID);
     rc = sqlite3_step(stmt);
-    if(rc != SQLITE_OK){
-        cerr<<"Erro ao atualizar o livro: "<<sqlite3_errmsg(db)<<endl;
+    if (rc != SQLITE_OK)
+    {
+        cerr << "Erro ao atualizar o livro: " << sqlite3_errmsg(db) << endl;
     }
-    else{
-        cout<<"Livro atualizado com sucesso! "<<endl;
+    else
+    {
+        cout << "Livro atualizado com sucesso! " << endl;
     }
     sqlite3_finalize(stmt);
 }
 
-void Database::getAudioBook(){
+void Database::getAudioBook()
+{
     const char *sql_select_AudioBook = "SELECT * FROM Livros WHERE AudioBook = 1;";
     sqlite3_stmt *stmt;
-    int rc = sqlite3_prepare_v2(db, sql_select_AudioBook -1, &stmt, nullptr);
-    if(rc != SQLITE_OK){
-        cerr<<"Erro ao preparar consulta: "<<sqlite3_errmsg(db)<<endl;
+    int rc = sqlite3_prepare_v2(db, sql_select_AudioBook, -1, &stmt, nullptr); // Correção aqui
+    if (rc != SQLITE_OK)
+    {
+        cerr << "Erro ao preparar consulta: " << sqlite3_errmsg(db) << endl;
         return;
     }
-    cout<<"Livros com AudioBook: "<<endl;
-    while((rc = sqlite3_step(stmt)) == SQLITE_ROW){
+    cout << "Livros com AudioBook: " << endl;
+    while ((rc = sqlite3_step(stmt)) == SQLITE_ROW)
+    {
         int ID = sqlite3_column_int(stmt, 0);
         const unsigned char *title = sqlite3_column_text(stmt, 1);
         const unsigned char *author = sqlite3_column_text(stmt, 2);
         int borrowed = sqlite3_column_int(stmt, 3);
         const unsigned char *date = sqlite3_column_text(stmt, 4);
-        cout<<"ID: "<<ID<<", Título: "<<title<<", Autor: "<<author<<", Emprestado: "<<(borrowed ? "Sim" : "Não")<<"Data de lançamento: "<<date<<endl;
+        cout << "ID: " << ID << ", Título: " << title << ", Autor: " << author << ", Emprestado: " << (borrowed ? "Sim" : "Não") << ", Data de lançamento: " << date << endl; // Correção na impressão
     }
     sqlite3_finalize(stmt);
 }
 
-void Database::getAudioBookByName(const string &bookName){
+void Database::getAudioBookByName(const string &bookName)
+{
     if (bookName.empty())
     {
         cerr << "Erro: Nome do livro vazio." << endl;
         return;
     }
 
-    const char sql_select_multimedia = "SELECT FROM Livros WHERE Titulo LIKE ? AND AudioBook = 1;";
+    const char *sql_select_multimedia = "SELECT * FROM Livros WHERE Titulo LIKE ? AND AudioBook = 1;"; // Correção aqui
 
-    sqlite3_stmt stmt;
+    sqlite3_stmt *stmt;
     int rc = sqlite3_prepare_v2(db, sql_select_multimedia, -1, &stmt, nullptr);
     if (rc != SQLITE_OK)
     {
@@ -854,13 +862,12 @@ void Database::getAudioBookByName(const string &bookName){
     {
         found = true;
         int id = sqlite3_column_int(stmt, 0);
-        const unsigned chartitle = sqlite3_column_text(stmt, 1);
-        const unsigned char author = sqlite3_column_text(stmt, 2);
+        const unsigned char *title = sqlite3_column_text(stmt, 1);
+        const unsigned char *author = sqlite3_column_text(stmt, 2);
         int borrowed = sqlite3_column_int(stmt, 3);
-        const unsigned chardate = sqlite3_column_text(stmt, 4);
+        const unsigned char *date = sqlite3_column_text(stmt, 4);
 
-        cout << "ID: " << id << ", Título: " << title << ", Autor: " << author
-             << ", Emprestado: " << (borrowed ? "Sim" : "Não") << ", Data de Lançamento: " << date << endl;
+        cout << "ID: " << id << ", Título: " << title << ", Autor: " << author << ", Emprestado: " << (borrowed ? "Sim" : "Não") << ", Data de Lançamento: " << date << endl;
     }
 
     sqlite3_finalize(stmt);
@@ -871,16 +878,17 @@ void Database::getAudioBookByName(const string &bookName){
     }
 }
 
-void Database::getAudioBookByAuthor(const string &bookAuthor){
+void Database::getAudioBookByAuthor(const string &bookAuthor)
+{
     if (bookAuthor.empty())
     {
-        cerr << "Erro: Nome do livro vazio." << endl;
+        cerr << "Erro: Nome do autor vazio." << endl; // Correção de mensagem de erro
         return;
     }
 
-    const char sql_select_multimedia = "SELECT FROM Livros WHERE Autor LIKE ? AND AudioBook = 1;";
+    const char *sql_select_multimedia = "SELECT * FROM Livros WHERE Autor LIKE ? AND AudioBook = 1;"; // Correção aqui
 
-    sqlite3_stmt stmt;
+    sqlite3_stmt *stmt;
     int rc = sqlite3_prepare_v2(db, sql_select_multimedia, -1, &stmt, nullptr);
     if (rc != SQLITE_OK)
     {
@@ -898,19 +906,18 @@ void Database::getAudioBookByAuthor(const string &bookAuthor){
     {
         found = true;
         int id = sqlite3_column_int(stmt, 0);
-        const unsigned chartitle = sqlite3_column_text(stmt, 1);
-        const unsigned char author = sqlite3_column_text(stmt, 2);
+        const unsigned char *title = sqlite3_column_text(stmt, 1);
+        const unsigned char *author = sqlite3_column_text(stmt, 2);
         int borrowed = sqlite3_column_int(stmt, 3);
-        const unsigned chardate = sqlite3_column_text(stmt, 4);
+        const unsigned char *date = sqlite3_column_text(stmt, 4);
 
-        cout << "ID: " << id << ", Título: " << title << ", Autor: " << author
-             << ", Emprestado: " << (borrowed ? "Sim" : "Não") << ", Data de Lançamento: " << date << endl;
+        cout << "ID: " << id << ", Título: " << title << ", Autor: " << author << ", Emprestado: " << (borrowed ? "Sim" : "Não") << ", Data de Lançamento: " << date << endl;
     }
 
     sqlite3_finalize(stmt);
 
     if (!found)
     {
-        cout << "Nenhum livro encontrado com o título contendo '" << bookAuthor << "'." << endl;
+        cout << "Nenhum livro encontrado com o autor contendo '" << bookAuthor << "'." << endl; // Correção de mensagem de erro
     }
 }
