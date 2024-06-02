@@ -6,7 +6,15 @@
 using namespace std;
 
 Application::Application() : isLogged(false), choice(0), loggedChoice(0) {}
-Application::~Application() {}
+Application::~Application()
+{
+    delete menu;
+    delete books;
+    delete users;
+    delete employeers;
+    delete bookStatus;
+    delete audioBook;
+}
 
 void Application::run()
 {
