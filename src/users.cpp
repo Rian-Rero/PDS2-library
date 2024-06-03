@@ -1,11 +1,11 @@
-#include <string>
-#include <iostream>
 #include "users.hpp"
 #include "dataBase.hpp"
-#include "databaseConfig.hpp"
 
 using namespace std;
 
+/**
+ * @brief Construtor da classe Users.
+ */
 Users::Users()
 {
     name = "";
@@ -13,11 +13,20 @@ Users::Users()
     password = "";
 };
 
+/**
+ * @brief Destrutor da classe Users.
+ */
 Users::~Users(){};
 
+/**
+ * @brief Função para criar um novo usuário.
+ *
+ * @details Solicita ao usuário que insira nome, email e senha,
+ * em seguida, chama a função do banco de dados para criar o usuário.
+ */
 void Users::createUser_()
 {
-    DataBaseConfig dataBaseName;
+
     Database *dataBase = new Database(dataBaseName.getDataBaseFileName());
     cin.ignore();
     string name, email, password;
@@ -42,38 +51,78 @@ void Users::createUser_()
     delete dataBase;
 }
 
+/**
+ * @brief Função para obter o email do usuário.
+ *
+ * @return Email do usuário.
+ */
 string Users::getEmail()
 {
     return email;
 }
 
+/**
+ * @brief Função para obter o nome do usuário.
+ *
+ * @return Nome do usuário.
+ */
 string Users::getName()
 {
     return name;
 }
 
+/**
+ * @brief Função para verificar se o usuário é administrador.
+ *
+ * @return 1 se for administrador, 0 caso contrário.
+ */
 int Users::isAdmin()
 {
     return admin;
 }
 
+/**
+ * @brief Função para definir o nome do usuário.
+ *
+ * @param name Nome do usuário.
+ */
 void Users::setName(string name)
 {
     this->name = name;
 }
+/**
+ * @brief Função para definir o email do usuário.
+ *
+ * @param email Email do usuário.
+ */
 void Users::setEmail(string email)
 {
     this->email = email;
 }
 
+/**
+ * @brief Função para definir se o usuário é administrador ou não.
+ *
+ * @param admin 1 para administrador, 0 caso contrário.
+ */
 void Users::setAdmin(int admin)
 {
     this->admin = admin;
 }
 
+/**
+ * @brief Função para realizar login.
+ *
+ * @details Solicita ao usuário que insira o email e a senha,
+ * em seguida, chama a função do banco de dados para verificar as credenciais.
+ *
+ * @param users Ponteiro para objeto Users onde os detalhes do usuário serão armazenados.
+ *
+ * @return Verdadeiro se o login for bem-sucedido, falso caso contrário.
+ */
 bool Users::login_(Users *users)
 {
-    DataBaseConfig dataBaseName;
+
     Database *dataBase = new Database(dataBaseName.getDataBaseFileName());
     cin.ignore();
     string email, password;
@@ -101,9 +150,12 @@ bool Users::login_(Users *users)
     return loginSuccessful;
 }
 
+/**
+ * @brief Função para obter todos os usuários do banco de dados.
+ */
 void Users::getAllUsers_()
 {
-    DataBaseConfig dataBaseName;
+
     Database *dataBase = new Database(dataBaseName.getDataBaseFileName());
     try
     {
@@ -117,9 +169,15 @@ void Users::getAllUsers_()
     delete dataBase;
 }
 
+/**
+ * @brief Função para atualizar as informações de um usuário.
+ *
+ * @details Solicita ao usuário que insira o ID do usuário que será atualizado,
+ * em seguida, chama a função do banco de dados para realizar a atualização.
+ */
 void Users::updateUser_()
 {
-    DataBaseConfig dataBaseName;
+
     Database *dataBase = new Database(dataBaseName.getDataBaseFileName());
     cin.ignore();
     int ID;
@@ -136,18 +194,32 @@ void Users::updateUser_()
     delete dataBase;
 }
 
+/**
+ * @brief Função para obter o tipo de usuário (ex: admin, cliente) com base no email.
+ *
+ * @param email Email do usuário.
+ *
+ * @return Tipo de usuário.
+ */
 string Users::getUserType_(const string &email)
 {
-    DataBaseConfig dataBaseName;
+
     Database *dataBase = new Database(dataBaseName.getDataBaseFileName());
     string position = dataBase->getUserType(email);
     delete dataBase;
     return position;
 }
 
+/**
+ * @brief Função para obter o ID do usuário com base no email.
+ *
+ * @param email Email do usuário.
+ *
+ * @return ID do usuário.
+ */
 int Users::getID_(string email)
 {
-    DataBaseConfig dataBaseName;
+
     Database *dataBase = new Database(dataBaseName.getDataBaseFileName());
     int ID = dataBase->getID(email.c_str());
     delete dataBase;
