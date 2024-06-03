@@ -44,7 +44,7 @@ int main(int argc, char *argv[])
     char *zErrMsg = 0;
     int rc;
 
-    rc = sqlite3_open("./database/LibraryDevelopmentDB3.db", &db);
+    rc = sqlite3_open("./database/LibraryProductionDB.db", &db);
 
     if (rc)
     {
@@ -58,6 +58,8 @@ int main(int argc, char *argv[])
 
     const char *livros_sql = "SELECT * FROM Livros";
     const char *usuarios_sql = "SELECT * FROM Usuarios";
+    const char *livros_historico = "SELECT * FROM HistoricoEmprestimos";
+    const char *livros_alugados = "SELECT * FROM LivrosAlugados";
 
     rc = sqlite3_exec(db, livros_sql, callback, 0, &zErrMsg);
 
@@ -81,6 +83,27 @@ int main(int argc, char *argv[])
     else
     {
         cout << "Consulta SQL de Usuarios executada com sucesso." << endl;
+    }
+    rc = sqlite3_exec(db, livros_historico, callback, 0, &zErrMsg);
+
+    if (rc != SQLITE_OK)
+    {
+        cerr << "Erro na consulta SQL de HistoricoEmprestimos: " << zErrMsg << endl;
+        sqlite3_free(zErrMsg);
+    }
+    else
+    {
+        cout << "Consulta SQL de HistoricoEmprestimos executada com sucesso." << endl;
+    }
+    rc = sqlite3_exec(db, livros_alugados, callback, 0, &zErrMsg);
+    if (rc != SQLITE_OK)
+    {
+        cerr << "Erro na consulta SQL de LivrosAlugados: " << zErrMsg << endl;
+        sqlite3_free(zErrMsg);
+    }
+    else
+    {
+        cout << "Consulta SQL de LivrosAlugados executada com sucesso." << endl;
     }
 
     sqlite3_close(db);

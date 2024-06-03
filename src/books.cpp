@@ -2,6 +2,7 @@
 #include <string>
 #include <regex> // Validação de data
 #include "books.hpp"
+#include <fstream>
 
 using namespace std;
 
@@ -19,6 +20,47 @@ Books::Books()
 /**
  * @brief Cria um novo registro de livro no banco de dados.
  */
+
+/**
+ * @brief Cria um novo registro de livro no banco de dados a partir de um arquivo.
+ * @param filename Nome do arquivo que contém os detalhes do livro.
+ */
+void Books::createBookFromFile_(const string &filename)
+{
+    ifstream file(filename);
+    if (!file.is_open())
+    {
+        cerr << "Erro ao abrir o arquivo " << filename << endl;
+        return;
+    }
+
+    string line;
+    while (getline(file, line))
+    {
+        stringstream ss(line);
+        string title, author, dateStr;
+        int borrowed;
+
+        if (getline(ss, title, ',') && getline(ss, author, ',') && getline(ss, dateStr, ',') && ss >> borrowed)
+        {
+            try
+            {
+                dataBase->createBook(title, author, borrowed, dateStr);
+            }
+            catch (const exception &e)
+            {
+                cerr << "Erro ao criar o livro: " << e.what() << endl;
+            }
+        }
+        else
+        {
+            cerr << "Formato de linha inválido no arquivo." << endl;
+        }
+    }
+
+    file.close();
+}
+
 void Books::createBook_()
 {
     string title, author, dateStr;

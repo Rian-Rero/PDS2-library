@@ -55,6 +55,12 @@ public:
     void createBook_();
 
     /**
+     * @brief Cria um novo registro de livro no banco de dados a partir de um arquivo.
+     * @param filename Nome do arquivo que contém os detalhes do livro.
+     */
+    void createBookFromFile_(const string &filename);
+
+    /**
      * @brief Destrutor da classe Books.
      */
     ~Books();

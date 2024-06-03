@@ -11,6 +11,6 @@ using namespace std;
  */
 const string DataBaseConfig::getDataBaseFileName()
 {
-    string fileName = "./database/LibraryDevelopmentDB3.db";
+    string fileName = "./database/LibraryProductionDB.db";
     return fileName;
 }

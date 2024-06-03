@@ -1,0 +1,85 @@
+
+1984, George Orwell, 08/06/1949, 0
+A Coruja, J.K. Rowling, 01/01/2022, 0
+A Divina Comédia, Dante Alighieri, 01/01/1320, 0
+Admirável Mundo Novo, Aldous Huxley, 01/01/1932, 0
+A Estrada, Cormac McCarthy, 26/09/2006, 0
+A Guerra dos Tronos, George R.R. Martin, 06/08/1996, 0
+A Guerra dos Tronos, George R. R. Martin, 15/08/1996, 0
+A Ilha do Tesouro, Robert Louis Stevenson, 14/11/1883, 0
+A Letra Escarlate, Nathaniel Hawthorne, 01/01/1850, 0
+A Menina que Roubava Livros, Markus Zusak, 01/01/2005, 0
+A Metamorfose, Franz Kafka, 01/01/1915, 0
+A Montanha Mágica, Thomas Mann, 01/01/1924, 0
+Anna Karenina, Leo Tolstoy, 28/01/1877, 0
+A Odisséia, Homer, 01/01/800 a.C., 0
+A Queda de Gondolin, J.R.R. Tolkien, 30/08/2018, 0
+A Redoma de Vidro, Sylvia Plath, 01/01/1963, 0
+A Revolução dos Bichos, George Orwell, 17/08/1945, 0
+A Sangue Frio, Truman Capote, 01/01/1966, 0
+A Sangue Frio, Truman Capote, 01/01/1966. 0
+As Aventuras de Huckleberry Finn, Mark Twain, 10/12/1884, 0
+As Aventuras de Tom Sawyer, Mark Twain, 10/12/1876, 0
+As Crônicas de Nárnia, C.S. Lewis, 01/01/1950, 0
+As Crônicas de Nárnia, C.S. Lewis, 16/10/1950, 0
+A Sombra do Vento, Carlos Ruiz Zafón, 01/01/2001, 0
+As Vinhas da Ira, John Steinbeck, 14/04/1939, 0
+Cem Anos de Solidão, Gabriel García Márquez, 05/06/1967, 0
+Cem Anos de Solidão, Gabriel García Márquez, 30/05/1967, 0
+Crime e Castigo, Agatha Christie, 01/01/1926, 0
+Crime e Castigo, Fyodor Dostoevsky, 01/01/1866, 0
+Dom Casmurro, Machado de Assis, 01/01/1899,
+Dom Casmurro, Machado de Assis, 01/01/1899, 0
+Dom Quixote, Miguel de Cervantes, 01/01/1605, 0
+Drácula, Bram Stoker, 26/05/1897, 0
+Fahrenheit 451, Ray Bradbury, 01/10/1953, 0
+Frankenstein, Mary Shelley, 01/01/1818, 0
+Grande Sertão: Veredas, João Guimarães Rosa, 01/01/1956, 0
+Guerra e Paz, Leo Tolstoy, 01/01/1869, 0
+Hamlet, William Shakespeare, 01/01/1600, 0
+Harry Potter e a Pedra Filosofal, J.K. Rowling, 26/06/1997, 0
+Memórias Póstumas de Brás Cubas, Machado de Assis, 01/01/1881, 0
+Moby Dick, Herman Melville, 18/10/1851, 0
+Mrs. Dalloway, Virginia Woolf, 14/05/1925, 0
+O Alquimista, Paulo Coelho, 01/01/1988, 0
+O Amor nos Tempos do Cólera, Gabriel García Márquez, 01/01/1985, 0
+O Apanhador no Campo de Centeio, J.D. Salinger, 16/07/1951, 0
+O Cão dos Baskervilles, Arthur Conan Doyle, 01/01/1902, 0
+O Código Da Vinci, Dan Brown, 18/03/2003, 0
+O Conde de Monte Cristo, Alexandre Dumas, 28/08/1844, 0
+O Coração das Trevas, Joseph Conrad, 01/01/1899, 0
+O Corcunda de Notre-Dame, Victor Hugo, 01/01/1831, 0
+O Estrangeiro, Albert Camus, 01/01/1942, 0
+O Grande Gatsby, F. Scott Fitzgerald, 10/04/1925, 0
+O Hobbit, J. R. R. Tolkien, 21/09/1937, 0
+O Hobbit, J.R.R. Tolkien, 21/09/1937, 0
+O Jogo do Anjo, Carlos Ruiz Zafón, 01/01/2008, 0
+O Ladrão de Raios, Rick Riordan, 28/06/2005, 0
+O Leão, a Feiticeira e o Guarda-Roupa, C.S. Lewis, 16/10/1950, 0
+O Lobo da Estepe, Hermann Hesse, 01/01/1927, 0
+O Lobo do Mar, Jack London, 01/01/1904, 0
+O Médico e o Monstro, Robert Louis Stevenson, 01/01/1886, 0
+O Médico e o Monstro, Robert Louis Stevenson, 05/01/1886, 0
+O Morro dos Ventos Uivantes, Emily Brontë, 01/01/1847, 0
+O Nome do Vento, Patrick Rothfuss, 01/03/2007, 0
+O Nome do Vento, Patrick Rothfuss, 27/03/2007, 0
+O Pequeno Príncipe, Antoine de Saint-Exupéry, 06/04/1943, 0
+O Príncipe, Nicolau Maquiavel, 01/01/1532, 0
+O Processo, Franz Kafka, 01/01/1925, 0
+O Retorno do Rei, J.R.R. Tolkien, 20/10/1955, 0
+O Retrato de Dorian Gray, Oscar Wilde, 01/01/1890, 0
+Orgulho e Preconceito, Jane Austen, 28/01/1813, 0
+O Senhor dos Anéis, J.R.R. Tolkien, 01/01/1954, 0
+O Senhor dos Anéis, J. R. R. Tolkien, 29/07/1954, 0
+Os Homens que Não Amavam as Mulheres, Stieg Larsson, 01/01/2005, 0
+Os Miseráveis, Victor Hugo, 01/01/1862, 0
+O Sol é para Todos, Harper Lee, 11/07/1960, 0
+O Sol é Para Todos, Harper Lee, 11/07/1960, 0
+Os Três Mosqueteiros, Alexandre Dumas, 14/03/1844, 0
+O Velho e o Mar, Ernest Hemingway, 01/01/1952, 0
+O Velho e o Mar, Ernest Hemingway, 01/09/1952, 0
+Príncipe, Nicolau Maquiavel, 01/01/1532
+rão de Raios, Rick Riordan, 28/06/2005, 0
+Robinson Crusoe, Daniel Defoe, 25/04/1719, 0
+Ulisses, James Joyce, 02/02/1922, 0
+Vinte Mil Léguas Submarinas, Jules Verne, 01/01/1870, 0
