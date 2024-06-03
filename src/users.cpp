@@ -1,5 +1,8 @@
 #include <string>
 #include <iostream>
+#include "users.hpp"
+#include "dataBase.hpp"
+#include "databaseConfig.hpp"
 
 using namespace std;
 
@@ -10,14 +13,12 @@ Users::Users()
     password = "";
 };
 
-Users::~Users()
-{
-    delete dataBase;
-};
+Users::~Users(){};
 
 void Users::createUser_()
 {
-
+    DataBaseConfig dataBaseName;
+    Database *dataBase = new Database(dataBaseName.getDataBaseFileName());
     cin.ignore();
     string name, email, password;
     cout << "Digite o nome do usuário: ";
@@ -37,6 +38,8 @@ void Users::createUser_()
     {
         cerr << "Erro ao criar o usuário: " << e.what() << endl;
     }
+
+    delete dataBase;
 }
 
 string Users::getEmail()
@@ -70,7 +73,8 @@ void Users::setAdmin(int admin)
 
 bool Users::login_(Users *users)
 {
-
+    DataBaseConfig dataBaseName;
+    Database *dataBase = new Database(dataBaseName.getDataBaseFileName());
     cin.ignore();
     string email, password;
     cout << "Digite o email do usuário: ";
@@ -92,12 +96,15 @@ bool Users::login_(Users *users)
         cerr << "Erro ao logar o usuário: " << e.what() << endl;
     }
 
+    delete dataBase;
+
     return loginSuccessful;
 }
 
 void Users::getAllUsers_()
 {
-
+    DataBaseConfig dataBaseName;
+    Database *dataBase = new Database(dataBaseName.getDataBaseFileName());
     try
     {
         dataBase->getUsers();
@@ -106,11 +113,14 @@ void Users::getAllUsers_()
     {
         cerr << "Erro ao buscar os usuários: " << e.what() << endl;
     }
+
+    delete dataBase;
 }
 
 void Users::updateUser_()
 {
-
+    DataBaseConfig dataBaseName;
+    Database *dataBase = new Database(dataBaseName.getDataBaseFileName());
     cin.ignore();
     int ID;
     cout << "Digite o ID do usuário que deseja tornar administrador: ";
@@ -123,20 +133,23 @@ void Users::updateUser_()
     {
         cerr << "Erro ao tornar o usuário um administrador: " << e.what() << endl;
     }
+    delete dataBase;
 }
 
 string Users::getUserType_(const string &email)
 {
-
+    DataBaseConfig dataBaseName;
+    Database *dataBase = new Database(dataBaseName.getDataBaseFileName());
     string position = dataBase->getUserType(email);
-
+    delete dataBase;
     return position;
 }
 
 int Users::getID_(string email)
 {
-
+    DataBaseConfig dataBaseName;
+    Database *dataBase = new Database(dataBaseName.getDataBaseFileName());
     int ID = dataBase->getID(email.c_str());
-
+    delete dataBase;
     return ID;
 }

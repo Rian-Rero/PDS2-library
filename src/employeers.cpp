@@ -9,7 +9,7 @@ Employeers::Employeers() : Users()
     position = "";
 }
 
-Employeers::~Employeers() : Users()
+Employeers::~Employeers()
 {
     delete dataBase;
 }

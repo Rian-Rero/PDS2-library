@@ -16,6 +16,9 @@ public:
     // Constructor
     Employeers();
 
+    // Destructor
+    ~Employeers();
+
     // Getters
     string getPosition();
 
