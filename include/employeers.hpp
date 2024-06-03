@@ -2,11 +2,15 @@
 #define EMPLOYEERS_H
 
 #include "users.hpp"
+#include "databaseConfig.hpp"
+#include "dataBase.hpp"
 
 class Employeers : public Users
 {
 private:
     string position;
+    DataBaseConfig dataBaseName;
+    Database *dataBase = new Database(dataBaseName.getDataBaseFileName());
 
 public:
     // Constructor

@@ -1,8 +1,15 @@
 #ifndef BOOKSTATUS_H
 #define BOOKSTATUS_H
 
+#include "databaseConfig.hpp"
+#include "dataBase.hpp"
+
 class BookStatus
 {
+
+private:
+    DataBaseConfig dataBaseName;
+    Database *dataBase = new Database(dataBaseName.getDataBaseFileName());
 
 public:
     BookStatus();

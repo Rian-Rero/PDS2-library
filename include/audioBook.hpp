@@ -9,9 +9,9 @@
 class AudioBook : public Books
 {
 private:
- int hasAudioBook; 
- DataBaseConfig dataBaseName;
- Database *dataBase = new Database(dataBaseName.getDataBaseFileName());
+    int hasAudioBook;
+    DataBaseConfig dataBaseName;
+    Database *dataBase = new Database(dataBaseName.getDataBaseFileName());
 
 public:
     AudioBook();

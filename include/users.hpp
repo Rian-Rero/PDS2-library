@@ -3,6 +3,8 @@
 
 #include <string>
 #include <iostream>
+#include "databaseConfig.hpp"
+#include "dataBase.hpp"
 
 using namespace std;
 
@@ -13,6 +15,8 @@ private:
     string email;
     string password;
     int admin;
+    DataBaseConfig dataBaseName;
+    Database *dataBase = new Database(dataBaseName.getDataBaseFileName());
 
 public:
     // Constructor

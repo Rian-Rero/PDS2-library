@@ -2,9 +2,7 @@
 #include <iostream>
 #include <string>
 #include <regex> // Validação de data
-#include "dataBase.hpp"
 #include "books.hpp"
-#include "databaseConfig.hpp"
 
 using namespace std;
 
@@ -18,8 +16,6 @@ Books::Books()
 
 void Books::createBook_()
 {
-    DataBaseConfig dataBaseName;
-    Database *dataBase = new Database(dataBaseName.getDataBaseFileName());
 
     string title, author, dateStr;
     bool borrowed = false;
@@ -71,13 +67,9 @@ void Books::createBook_()
     {
         cerr << "Erro ao criar o livro: " << e.what() << endl;
     }
-
-    delete dataBase;
 }
 void Books::getAllBooks_()
 {
-    DataBaseConfig dataBaseName;
-    Database *dataBase = new Database(dataBaseName.getDataBaseFileName());
 
     try
     {
@@ -87,13 +79,11 @@ void Books::getAllBooks_()
     {
         cerr << "Erro ao buscar os livros: " << e.what() << endl;
     }
-    delete dataBase;
 }
 
 void Books::getBook_()
 {
-    DataBaseConfig dataBaseName;
-    Database *dataBase = new Database(dataBaseName.getDataBaseFileName());
+
     string name;
     cin.ignore();
     cout << "Digite o nome do livro: ";
@@ -107,13 +97,11 @@ void Books::getBook_()
     {
         cerr << "Erro ao buscar o livro: " << e.what() << endl;
     }
-    delete dataBase;
 }
 
 void Books::getBookByAuthor_()
 {
-    DataBaseConfig dataBaseName;
-    Database *dataBase = new Database(dataBaseName.getDataBaseFileName());
+
     string author;
     cin.ignore();
     cout << "Digite o nome do autor: ";
@@ -127,13 +115,10 @@ void Books::getBookByAuthor_()
     {
         cerr << "Erro ao buscar o livro: " << e.what() << endl;
     }
-    delete dataBase;
 }
 
 void Books::getAvailableBooks_(bool borrowed)
 {
-    DataBaseConfig dataBaseName;
-    Database *dataBase = new Database(dataBaseName.getDataBaseFileName());
 
     try
     {
@@ -143,9 +128,9 @@ void Books::getAvailableBooks_(bool borrowed)
     {
         cerr << "Erro ao buscar os livros disponíveis: " << e.what() << endl;
     }
-    delete dataBase;
 }
 
-Books::~Books(){
-
+Books::~Books()
+{
+    delete dataBase;
 };

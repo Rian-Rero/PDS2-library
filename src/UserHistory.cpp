@@ -28,5 +28,6 @@ UserHistory::UserHistory()
     cout << "Cenário Teste:" << endl;
     cout << "- Um usuário após registrado deve poder reservar um livro" << endl;
     cout << "=======================================================================================================" << endl;
-
 }
+
+UserHistory::~UserHistory() {}
