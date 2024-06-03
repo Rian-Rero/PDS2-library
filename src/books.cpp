@@ -1,4 +1,3 @@
-
 #include <iostream>
 #include <string>
 #include <regex> // Validação de data
@@ -6,17 +5,22 @@
 
 using namespace std;
 
+/**
+ * @brief Construtor padrão da classe Books.
+ */
 Books::Books()
 {
     title = "";
     author = "";
     borrowed = false;
     date = "";
-};
+}
 
+/**
+ * @brief Cria um novo registro de livro no banco de dados.
+ */
 void Books::createBook_()
 {
-
     string title, author, dateStr;
     bool borrowed = false;
 
@@ -68,9 +72,12 @@ void Books::createBook_()
         cerr << "Erro ao criar o livro: " << e.what() << endl;
     }
 }
+
+/**
+ * @brief Busca e exibe todos os livros do banco de dados.
+ */
 void Books::getAllBooks_()
 {
-
     try
     {
         dataBase->getAllBooks();
@@ -81,9 +88,11 @@ void Books::getAllBooks_()
     }
 }
 
+/**
+ * @brief Busca e exibe um livro específico pelo título.
+ */
 void Books::getBook_()
 {
-
     string name;
     cin.ignore();
     cout << "Digite o nome do livro: ";
@@ -99,9 +108,11 @@ void Books::getBook_()
     }
 }
 
+/**
+ * @brief Busca e exibe todos os livros de um autor específico.
+ */
 void Books::getBookByAuthor_()
 {
-
     string author;
     cin.ignore();
     cout << "Digite o nome do autor: ";
@@ -117,9 +128,12 @@ void Books::getBookByAuthor_()
     }
 }
 
+/**
+ * @brief Busca e exibe todos os livros disponíveis ou emprestados.
+ * @param borrowed Estado de empréstimo dos livros (true para emprestados, false para disponíveis).
+ */
 void Books::getAvailableBooks_(bool borrowed)
 {
-
     try
     {
         dataBase->getAvailableBooks(borrowed);
@@ -130,7 +144,10 @@ void Books::getAvailableBooks_(bool borrowed)
     }
 }
 
+/**
+ * @brief Destrutor da classe Books.
+ */
 Books::~Books()
 {
     delete dataBase;
-};
+}

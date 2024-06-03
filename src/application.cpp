@@ -5,7 +5,14 @@
 
 using namespace std;
 
+/**
+ * @brief Constrói um novo objeto Application.
+ */
 Application::Application() : isLogged(false), choice(0), loggedChoice(0) {}
+
+/**
+ * @brief Destrói o objeto Application.
+ */
 Application::~Application()
 {
     delete menu;
@@ -16,6 +23,9 @@ Application::~Application()
     delete audioBook;
 }
 
+/**
+ * @brief Inicia a aplicação.
+ */
 void Application::run()
 {
     while (choice != 3)
@@ -40,6 +50,9 @@ void Application::run()
     }
 }
 
+/**
+ * @brief Exibe o menu principal.
+ */
 void Application::displayMainMenu()
 {
     menu->displayMainMenu_();
@@ -52,6 +65,9 @@ void Application::displayMainMenu()
     }
 }
 
+/**
+ * @brief Lida com o processo de login.
+ */
 void Application::handleLogin()
 {
     menu->login_();
@@ -62,6 +78,9 @@ void Application::handleLogin()
     }
 }
 
+/**
+ * @brief Lida com o menu para usuários logados.
+ */
 void Application::handleLoggedInMenu()
 {
     string position = users->getUserType_(users->getEmail());
@@ -228,12 +247,18 @@ void Application::handleLoggedInMenu()
     }
 }
 
+/**
+ * @brief Lida com a criação de livros.
+ */
 void Application::handleCreateBooks()
 {
     menu->createBooks_();
     books->createBook_();
 }
 
+/**
+ * @brief Lida com a visualização de livros.
+ */
 void Application::handleViewBooks()
 {
     int allBooksChoice;
@@ -267,12 +292,18 @@ void Application::handleViewBooks()
     } while (allBooksChoice != 3);
 }
 
+/**
+ * @brief Lida com o registro de novos usuários.
+ */
 void Application::handleUserRegistration()
 {
     menu->registerUser_();
     users->createUser_();
 }
 
+/**
+ * @brief Lida com o menu de audiolivros.
+ */
 void Application::handleAudioBook()
 {
     do
@@ -303,6 +334,9 @@ void Application::handleAudioBook()
     } while (audioBookChoice != 3);
 }
 
+/**
+ * @brief Lida com o menu de audiolivros para administradores.
+ */
 void Application::handleAdminAudioBook()
 {
     do
