@@ -1,0 +1,4 @@
+makefile
+padronização de identação
+banco de dados
+cliptografia
