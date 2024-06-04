@@ -113,7 +113,6 @@ void Database::createBook(const string &title, const string &author, bool borrow
 {
     const char *sql_insert =
         "INSERT INTO Livros (Titulo, Autor, Emprestado, DataCadastro) VALUES (?, ?, ?, ?);";
-
     sqlite3_stmt *stmt;
     int rc = sqlite3_prepare_v2(db, sql_insert, -1, &stmt, nullptr);
     if (rc != SQLITE_OK)
@@ -256,6 +255,35 @@ void Database::getBookByAuthor(const string &author)
     if (!found)
     {
         cout << "Nenhum livro encontrado com o autor contendo '" << author << "'." << endl;
+    }
+}
+
+string Database::getBookName(int ID)
+{
+    const char *sql_select_book = "SELECT Titulo FROM Livros WHERE ID = ?;";
+
+    sqlite3_stmt *stmt;
+    int rc = sqlite3_prepare_v2(db, sql_select_book, -1, &stmt, nullptr);
+    if (rc != SQLITE_OK)
+    {
+        cerr << "Erro ao preparar a consulta: " << sqlite3_errmsg(db) << endl;
+        return "";
+    }
+
+    sqlite3_bind_int(stmt, 1, ID);
+
+    if ((rc = sqlite3_step(stmt)) == SQLITE_ROW)
+    {
+        const unsigned char *title = sqlite3_column_text(stmt, 0);
+        string bookName = reinterpret_cast<const char *>(title);
+        sqlite3_finalize(stmt);
+        return bookName;
+    }
+    else
+    {
+        cout << "Livro não encontrado." << endl;
+        sqlite3_finalize(stmt);
+        return "";
     }
 }
 
@@ -451,6 +479,7 @@ void Database::getBorrowedHistory(int userID)
     sqlite3_finalize(stmt);
 }
 
+// preciso que apareca o nome do livro tbm
 void Database::getCurrentBorrowedBooks(int userID)
 {
     const char *sql_select_books = "SELECT * FROM LivrosAlugados WHERE UsuarioID = ?;";
@@ -472,8 +501,9 @@ void Database::getCurrentBorrowedBooks(int userID)
         int id = sqlite3_column_int(stmt, 0);
         int bookID = sqlite3_column_int(stmt, 2);
         const unsigned char *dateBorrowed = sqlite3_column_text(stmt, 3);
+        string bookName = getBookName(bookID);
 
-        cout << "ID: " << id << ", LivroID: " << bookID << ", Data de Empréstimo: " << dateBorrowed << endl;
+        cout << "ID: " << id << ", Nome: " << bookName << ", LivroID: " << bookID << ", Data de Empréstimo: " << dateBorrowed << endl;
     }
 
     sqlite3_finalize(stmt);

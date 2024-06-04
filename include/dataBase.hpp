@@ -47,6 +47,13 @@ public:
     void getBook(const string &name);
 
     /**
+     * @brief Obtém o nome de um livro pelo ID.
+     * @param ID ID do livro.
+     * @return Nome do livro.
+     */
+    string getBookName(int ID);
+
+    /**
      * @brief Obtém livros por autor.
      * @param author Autor dos livros.
      */
