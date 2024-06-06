@@ -66,6 +66,12 @@ public:
      * correspondente no banco de dados.
      */
     void updateEmployeerPosition_();
+
+    void displayInfo() override{
+        cout << "Nome: " << getName() << endl;
+        cout << "Email: " << getEmail() << endl;
+        cout << "Cargo: " << getPosition() << endl;
+    }
 };
 
 #endif // EMPLOYEERS_H

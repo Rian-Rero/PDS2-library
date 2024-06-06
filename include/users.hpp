@@ -124,6 +124,8 @@ public:
      */
     int getID_(string email);
 
+    virtual void displayInfo() = 0;
+
     // Destructor
     /**
      * @brief Destrutor da classe Users.
