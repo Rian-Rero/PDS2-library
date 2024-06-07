@@ -51,6 +51,11 @@ public:
      */
     void setPosition(string position);
 
+    void displayInfo() override{
+        Users::displayInfo();
+        cout << "Cargo: " << getPosition() << endl;
+    }
+
     // Methods
     /**
      * @brief Cria um novo funcionário.
@@ -58,6 +63,7 @@ public:
      * Solicita informações ao usuário e cria um novo funcionário no banco de dados.
      */
     void createEmployeer_();
+
 
     /**
      * @brief Atualiza o cargo de um funcionário.
@@ -67,11 +73,6 @@ public:
      */
     void updateEmployeerPosition_();
 
-    void displayInfo() override{
-        cout << "Nome: " << getName() << endl;
-        cout << "Email: " << getEmail() << endl;
-        cout << "Cargo: " << getPosition() << endl;
-    }
 };
 
 #endif // EMPLOYEERS_H
