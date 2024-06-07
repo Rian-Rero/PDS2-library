@@ -15,7 +15,7 @@ using namespace std;
     public:
     virtual void displayInfo() = 0;
     virtual ~Printable(){}
- }
+ };
 class Users: public Printable
 {
 private:
