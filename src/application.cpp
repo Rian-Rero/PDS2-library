@@ -134,15 +134,18 @@ void Application::handleLoggedInMenu()
             employeers->createEmployeer_();
             break;
         case 10:
+            users->displayInfo();
+            break;
+        case 11:
             books->getAllBooks_();
             bookStatus->rentBook_(users->getID_(users->getEmail()));
             handleLoggedInMenu();
             break;
-        case 11:
+        case 12:
             audioBook->getAudioBook_();
             handleAdminAudioBook();
             break;
-        case 12:
+        case 13:
             cout << "Deslogando..." << endl;
             isLogged = false;
             break;

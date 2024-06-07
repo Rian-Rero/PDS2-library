@@ -59,9 +59,10 @@ void Menu::displayLoggedInAdminMenu_(Users *user)
     cout << "║ 7. Acessar histórias de usuários       ║" << endl;
     cout << "║ 8. Conceder permissão de administrador ║" << endl;
     cout << "║ 9. Cadastrar um funcionário            ║" << endl;
-    cout << "║ 10. Alugar um Livro                    ║" << endl;
-    cout << "║ 11. Acessar Audio Books                ║" << endl;
-    cout << "║ 12. Logout                             ║" << endl;
+    cout << "║ 10. Ver informações de usuário         ║" << endl;
+    cout << "║ 11. Alugar um Livro                    ║" << endl;
+    cout << "║ 12. Acessar Audio Books                ║" << endl;
+    cout << "║ 13. Logout                             ║" << endl;
     cout << "╚════════════════════════════════════════╝" << endl;
     cout << "Escolha uma opção: ";
 }
