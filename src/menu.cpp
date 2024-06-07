@@ -77,7 +77,8 @@ void Menu::displayLoggedInMenu_(Users *user)
     cout << "║ 5. Acessar histórias de usuários       ║" << endl;
     cout << "║ 6. Alugar um Livro                     ║" << endl;
     cout << "║ 7. Acessar Audio Books                 ║" << endl;
-    cout << "║ 8. Logout                              ║" << endl;
+    cout << "║ 8. Acessar informações do usuário      ║" << endl;
+    cout << "║ 9. Logout                              ║" << endl;
     cout << "╚════════════════════════════════════════╝" << endl;
     cout << "Escolha uma opção: ";
 }

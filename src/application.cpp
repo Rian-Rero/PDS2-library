@@ -191,6 +191,9 @@ void Application::handleLoggedInMenu()
             handleAudioBook();
             break;
         case 8:
+        users->displayInfo();
+        break;
+        case 9:
             cout << "Deslogando..." << endl;
             isLogged = false;
             break;
