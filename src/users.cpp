@@ -225,3 +225,9 @@ int Users::getID_(string email)
     delete dataBase;
     return ID;
 }
+
+void Users::displayInfo()
+{
+    cout << "Nome: " << getName() << endl;
+    cout << "Email: " << getEmail() << endl;
+}

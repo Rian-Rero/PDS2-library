@@ -51,10 +51,7 @@ public:
      */
     void setPosition(string position);
 
-    void displayInfo() override{
-        Users::displayInfo();
-        cout << "Cargo: " << getPosition() << endl;
-    }
+    void displayInfo();
 
     // Methods
     /**
@@ -64,7 +61,6 @@ public:
      */
     void createEmployeer_();
 
-
     /**
      * @brief Atualiza o cargo de um funcionário.
      *
@@ -72,7 +68,6 @@ public:
      * correspondente no banco de dados.
      */
     void updateEmployeerPosition_();
-
 };
 
 #endif // EMPLOYEERS_H

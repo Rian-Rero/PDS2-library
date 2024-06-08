@@ -11,12 +11,13 @@ using namespace std;
  * @brief Classe que representa usuários do sistema.
  *
  */
- class Printable{
-    public:
+class Printable
+{
+public:
     virtual void displayInfo() = 0;
-    virtual ~Printable(){}
- };
-class Users: public Printable
+    virtual ~Printable() {}
+};
+class Users : public Printable
 {
 private:
     string name;                 /**< Nome do usuário. */
@@ -129,10 +130,11 @@ public:
      */
     int getID_(string email);
 
-    void displayInfo() override{
-        cout << "Nome: " << getName() << endl;
-        cout << "Email: " << getEmail() << endl;
-    }
+    /**
+     * @brief Exibe as informações do usuário.
+     *
+     */
+    void displayInfo();
 
     // Destructor
     /**

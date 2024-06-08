@@ -62,3 +62,10 @@ void Employeers::updateEmployeerPosition_()
  * Solicita o ID do funcionário e o novo cargo, e atualiza o cargo do funcionário
  * correspondente no banco de dados.
  */
+
+void Employeers::displayInfo()
+{
+
+    Users::displayInfo();
+    cout << "Cargo: " << getPosition() << endl;
+}

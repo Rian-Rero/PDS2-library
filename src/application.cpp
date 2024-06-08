@@ -132,9 +132,11 @@ void Application::handleLoggedInMenu()
             break;
         case 9:
             employeers->createEmployeer_();
+            handleLoggedInMenu();
             break;
         case 10:
             users->displayInfo();
+            handleLoggedInMenu();
             break;
         case 11:
             books->getAllBooks_();
@@ -194,8 +196,9 @@ void Application::handleLoggedInMenu()
             handleAudioBook();
             break;
         case 8:
-        users->displayInfo();
-        break;
+            users->displayInfo();
+            handleLoggedInMenu();
+            break;
         case 9:
             cout << "Deslogando..." << endl;
             isLogged = false;
@@ -240,7 +243,6 @@ void Application::handleLoggedInMenu()
         case 6:
             audioBook->getAudioBook_();
             handleAdminAudioBook();
-
             break;
         case 7:
             cout << "Deslogando..." << endl;
