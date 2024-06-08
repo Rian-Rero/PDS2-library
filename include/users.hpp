@@ -134,7 +134,7 @@ public:
      * @brief Exibe as informações do usuário.
      *
      */
-    void displayInfo();
+    virtual void displayInfo();
 
     // Destructor
     /**

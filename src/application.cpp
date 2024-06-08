@@ -8,7 +8,7 @@ using namespace std;
 /**
  * @brief Constrói um novo objeto Application.
  */
-Application::Application() : isLogged(false), choice(0), loggedChoice(0) {}
+Application::Application() : isLogged(false), choice(0), loggedChoice(0), audioBookChoice(0) {}
 
 /**
  * @brief Destrói o objeto Application.

@@ -51,7 +51,7 @@ public:
      */
     void setPosition(string position);
 
-    void displayInfo();
+    virtual void displayInfo() override;
 
     // Methods
     /**
